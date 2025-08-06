@@ -75,10 +75,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const storedToken = getToken();
       const storedUser = getUser();
 
-      // console.log('AuthContext Initialize:', {
-      //   storedToken: storedToken ? 'exists' : 'null',
-      //   storedUser: storedUser ? 'exists' : 'null',
-      // });
+      console.log('🔐 AuthContext Initialize:', {
+        storedToken: storedToken ? 'exists' : 'null',
+        storedUser: storedUser ? 'exists' : 'null',
+        tokenLength: storedToken?.length,
+      });
 
       if (storedToken && storedUser) {
         setToken(storedToken);

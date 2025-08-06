@@ -1,9 +1,25 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 import { useRouter } from 'next/navigation';
-import { useLoginUserMutation, useLogoutMutation, useGetProfileQuery } from '@data-access/api';
-import { getToken, getUser, clearAuth, storeToken, storeUser } from '@data-access/auth-utils';
+import {
+  useLoginUserMutation,
+  useLogoutMutation,
+  useGetProfileQuery,
+} from '@data-access/api';
+import {
+  getToken,
+  getUser,
+  clearAuth,
+  storeToken,
+  storeUser,
+} from '@data-access/auth-utils';
 import type { User } from '@data-access/types';
 
 // Auth context interface
@@ -35,16 +51,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // RTK Query hooks
   const [loginUser, loginState] = useLoginUserMutation();
   const [logoutUser, logoutState] = useLogoutMutation();
-  const { data: profileData, refetch: refetchProfile, isLoading: isProfileLoading } = useGetProfileQuery(undefined, {
-    skip: !token, // Skip if no token
+  const {
+    data: profileData,
+    refetch: refetchProfile,
+    isLoading: isProfileLoading,
+  } = useGetProfileQuery(undefined, {
+    skip: shouldSkipProfile, // Skip if no token
   });
 
   // Debug profile query
-  console.log('Profile Query Debug:', {
-    token: token ? 'exists' : 'null',
-    profileData,
-    skip: !token,
-  });
+  // console.log('Profile Query Debug:', {
+  //   token: token ? 'exists' : 'null',
+  //   profileData,
+  //   skip: shouldSkipProfile,
+  // });
 
   // Initialize auth state on mount
   useEffect(() => {
@@ -52,10 +72,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const storedToken = getToken();
       const storedUser = getUser();
 
-      console.log('AuthContext Initialize:', {
-        storedToken: storedToken ? 'exists' : 'null',
-        storedUser: storedUser ? 'exists' : 'null',
-      });
+      // console.log('AuthContext Initialize:', {
+      //   storedToken: storedToken ? 'exists' : 'null',
+      //   storedUser: storedUser ? 'exists' : 'null',
+      // });
 
       if (storedToken && storedUser) {
         setToken(storedToken);
@@ -80,9 +100,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   // Debug loading state
-  useEffect(() => {
-    console.log('Loading state changed:', isLoading);
-  }, [isLoading]);
+  // useEffect(() => {
+  //   console.log('Loading state changed:', isLoading);
+  // }, [isLoading]);
 
   // Update user when profile data changes
   useEffect(() => {
@@ -93,16 +113,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, [profileData]);
 
+  // Skip profile query if no token
+  const shouldSkipProfile = !token;
+
   // Login function
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       setIsLoading(true);
       const result = await loginUser({ email, password }).unwrap();
 
-      console.log('Login Success:', {
-        token: result.token ? 'exists' : 'null',
-        user: result.user,
-      });
+      // console.log('Login Success:', {
+      //   token: result.token ? 'exists' : 'null',
+      //   user: result.user,
+      // });
 
       // Store token and user data
       storeToken(result.token);
@@ -116,14 +139,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Profile fetch'i arka planda yap, hata olsa bile login başarılı say
       if (result.token) {
-        refetchProfile().catch(error => {
-          console.log('Profile fetch failed, but login successful:', error);
-        });
+        // Profile fetch'i non-blocking yap
+        setTimeout(() => {
+          refetchProfile().catch(error => {
+            console.log('Profile fetch failed, but login successful:', error);
+          });
+        }, 100);
       }
 
       return true;
     } catch (error) {
-      console.error('Login failed:', error);
+      // console.error('Login failed:', error);
       setIsLoading(false);
       return false;
     }
@@ -172,17 +198,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Debug logging
-  console.log('AuthContext Debug:', {
-    user,
-    token: token ? 'exists' : 'null',
-    isAuthenticated: !!token && !!user,
-    isLoading: isLoading || loginState.isLoading || logoutState.isLoading,
-  });
+  // console.log('AuthContext Debug:', {
+  //   user,
+  //   token: token ? 'exists' : 'null',
+  //   isAuthenticated: !!token && !!user,
+  //   isLoading: isLoading || loginState.isLoading || logoutState.isLoading,
+  // });
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
@@ -201,7 +225,7 @@ export const useAuth = (): AuthContextType => {
 export const withAuth = <P extends object>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P> => {
-  const AuthenticatedComponent: React.FC<P> = (props) => {
+  const AuthenticatedComponent: React.FC<P> = props => {
     const { isAuthenticated, isLoading } = useAuth();
     const router = useRouter();
 
@@ -214,12 +238,14 @@ export const withAuth = <P extends object>(
     // Show loading while checking auth
     if (isLoading) {
       return (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
           <div>Loading...</div>
         </div>
       );
@@ -244,7 +270,7 @@ export const withAuth = <P extends object>(
 export const withPublicRoute = <P extends object>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P> => {
-  const PublicComponent: React.FC<P> = (props) => {
+  const PublicComponent: React.FC<P> = props => {
     const { isAuthenticated, isLoading } = useAuth();
     const router = useRouter();
 
@@ -257,12 +283,14 @@ export const withPublicRoute = <P extends object>(
     // Show loading while checking auth
     if (isLoading) {
       return (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
           <div>Loading...</div>
         </div>
       );
@@ -310,4 +338,4 @@ export const useAuthGuard = () => {
     isAuthenticated,
     isLoading,
   };
-}; 
+};

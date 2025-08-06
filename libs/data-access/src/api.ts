@@ -9,7 +9,13 @@ import type {
   Review,
   Category,
 } from './types';
-import { getToken, storeToken, storeUser, clearAuth } from './auth-utils';
+import {
+  getToken,
+  storeToken,
+  storeUser,
+  clearAuth,
+  getGuestToken,
+} from './auth-utils';
 
 // Base API configuration
 export const api = createApi({
@@ -18,13 +24,15 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
     prepareHeaders: headers => {
       headers.set('Content-Type', 'application/json');
-
-      // Add JWT token from localStorage if available
-      const token = localStorage.getItem('token');
+      // Önce user token, yoksa guest token
+      const token = getToken() || getGuestToken();
+      console.log(
+        '🔑 Token being sent:',
+        token ? `${token.substring(0, 10)}...` : 'NO TOKEN'
+      );
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
-
       return headers;
     },
   }),
@@ -85,12 +93,12 @@ export const api = createApi({
 
     addToCart: build.mutation<
       CartItem[],
-      { productId: string; quantity?: number; variantId?: string }
+      { variantId: number; quantity?: number }
     >({
-      query: ({ productId, quantity = 1, variantId }) => ({
-        url: 'cart',
+      query: ({ variantId, quantity = 1 }) => ({
+        url: 'cart', // backend endpoint is /api/cart
         method: 'POST',
-        body: { productId, quantity, variantId },
+        body: { variantId, quantity },
       }),
       invalidatesTags: ['Cart'],
     }),
@@ -107,11 +115,14 @@ export const api = createApi({
       CartItem[],
       { itemId: string; quantity: number }
     >({
-      query: ({ itemId, quantity }) => ({
-        url: `cart/${itemId}`,
-        method: 'PUT',
-        body: { quantity },
-      }),
+      query: ({ itemId, quantity }) => {
+        console.log('🔍 updateCartItem called with:', { itemId, quantity });
+        return {
+          url: `cart/${itemId}`,
+          method: 'PATCH', // Try PATCH instead of PUT
+          body: { quantity },
+        };
+      },
       invalidatesTags: ['Cart'],
     }),
 

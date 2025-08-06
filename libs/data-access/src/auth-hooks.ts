@@ -1,107 +1,64 @@
 // Custom authentication hooks
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   useLoginUserMutation,
   useRegisterUserMutation,
-  useLogoutMutation,
   useGetProfileQuery,
   useRefreshTokenMutation,
 } from './api';
-import {
-  isAuthenticated,
-  getUser,
-  clearAuth,
-  storeToken,
-  storeUser,
-} from './auth-utils';
-import type { AuthUser } from './auth-utils';
+import { fetchOrCreateGuestToken } from './auth-utils';
+import { App } from 'antd';
 
-/**
- * Custom hook for authentication state
- */
-export const useAuth = () => {
-  const [login, loginState] = useLoginUserMutation();
-  const [register, registerState] = useRegisterUserMutation();
-  const [logout, logoutState] = useLogoutMutation();
-  const [refreshToken, refreshState] = useRefreshTokenMutation();
-  const { data: profile, isLoading: profileLoading } = useGetProfileQuery(
-    undefined,
-    { skip: !isAuthenticated() }
-  );
+export function useEnsureGuestToken() {
+  useEffect(() => {
+    fetchOrCreateGuestToken();
+  }, []);
+}
 
-  const handleLogin = useCallback(
-    async (email: string, password: string) => {
+export function useLogin() {
+  const [loginUser, { isLoading, error }] = useLoginUserMutation();
+  const router = useRouter();
+  const { message } = App.useApp();
+
+  const login = useCallback(
+    async (credentials: LoginCredentials) => {
       try {
-        const result = await login({ email, password }).unwrap();
-        return result;
-      } catch (error) {
-        console.error('Login failed:', error);
-        throw error;
+        const { data } = await loginUser(credentials).unwrap();
+        message.success('Login successful!');
+        router.push('/');
+      } catch (err) {
+        message.error('Login failed. Please check your credentials.');
+        console.error('Login error:', err);
       }
     },
-    [login]
+    [loginUser, router, message]
   );
 
-  const handleRegister = useCallback(
-    async (email: string, password: string, name: string) => {
+  return { login, isLoading, error };
+}
+
+export function useRegister() {
+  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+  const router = useRouter();
+  const { message } = App.useApp();
+
+  const register = useCallback(
+    async (userData: RegisterCredentials) => {
       try {
-        const result = await register({ email, password, name }).unwrap();
-        return result;
-      } catch (error) {
-        console.error('Registration failed:', error);
-        throw error;
+        const { data } = await registerUser(userData).unwrap();
+        message.success('Registration successful!');
+        router.push('/');
+      } catch (err) {
+        message.error('Registration failed. Please try again.');
+        console.error('Registration error:', err);
       }
     },
-    [register]
+    [registerUser, router, message]
   );
 
-  const handleLogout = useCallback(async () => {
-    try {
-      await logout().unwrap();
-      clearAuth();
-    } catch (error) {
-      console.error('Logout failed:', error);
-      // Clear auth data even if API call fails
-      clearAuth();
-    }
-  }, [logout]);
-
-  const handleRefreshToken = useCallback(async () => {
-    try {
-      const result = await refreshToken().unwrap();
-      return result;
-    } catch (error) {
-      console.error('Token refresh failed:', error);
-      throw error;
-    }
-  }, [refreshToken]);
-
-  return {
-    // State
-    isAuthenticated: isAuthenticated(),
-    user: getUser(),
-    profile,
-    profileLoading,
-
-    // Actions
-    login: handleLogin,
-    register: handleRegister,
-    logout: handleLogout,
-    refreshToken: handleRefreshToken,
-
-    // Loading states
-    loginLoading: loginState.isLoading,
-    registerLoading: registerState.isLoading,
-    logoutLoading: logoutState.isLoading,
-    refreshLoading: refreshState.isLoading,
-
-    // Error states
-    loginError: loginState.error,
-    registerError: registerState.error,
-    logoutError: logoutState.error,
-    refreshError: refreshState.error,
-  };
-};
+  return { register, isLoading, error };
+}
 
 /**
  * Custom hook for protected routes

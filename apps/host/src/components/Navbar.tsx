@@ -2,23 +2,37 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Menu, Layout, Spin } from 'antd';
+import { Menu, Layout, Spin, Badge } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'next/navigation';
-import { useGetCategoriesFromApiQuery } from '@data-access/api';
+import {
+  useGetCategoriesFromApiQuery,
+  useGetCartItemsQuery,
+} from '@data-access/api';
+import { useCartDrawer } from './CartDrawerContext';
 
 const { Header } = Layout;
 
 export const Navbar: React.FC = () => {
   const { data: categories, isLoading } = useGetCategoriesFromApiQuery();
+  const { data: cartItems } = useGetCartItemsQuery();
   const searchParams = useSearchParams();
+  const { openCart } = useCartDrawer();
 
   // Aktif kategori seçimi için URL'den categoryId'yi alıyoruz
   const activeKey = searchParams.get('categoryId');
 
+  // Toplam sepet adedi hesaplama
+  const cartCount =
+    cartItems?.reduce((total, item) => total + (item.quantity || 1), 0) || 0;
+
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
-      <div className="logo">
-        <Link href="/" style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+      <div className='logo'>
+        <Link
+          href='/'
+          style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}
+        >
           Kayra Export E-commerce
         </Link>
       </div>
@@ -28,32 +42,49 @@ export const Navbar: React.FC = () => {
           <Spin style={{ color: 'white' }} />
         ) : (
           <Menu
-            theme="dark"
-            mode="horizontal"
+            theme='dark'
+            mode='horizontal'
             selectedKeys={activeKey ? [activeKey] : []}
-          >
-            {categories && categories.length > 0 ? (
-              categories.map((cat) => (
-                <Menu.Item key={cat.id}>
-                  <Link href={`/categories/${cat.id}`}>
-                    {cat.name}
-                  </Link>
-                </Menu.Item>
-              ))
-            ) : (
-              <Menu.Item key="no-categories">
-                <span style={{ color: '#999' }}>No categories available</span>
-              </Menu.Item>
-            )}
-          </Menu>
+            items={
+              categories && categories.length > 0
+                ? categories.map(cat => ({
+                    key: cat.id,
+                    label: (
+                      <Link href={`/categories/${cat.id}`}>{cat.name}</Link>
+                    ),
+                  }))
+                : [
+                    {
+                      key: 'no-categories',
+                      label: (
+                        <span style={{ color: '#999' }}>
+                          No categories available
+                        </span>
+                      ),
+                    },
+                  ]
+            }
+          />
         )}
       </div>
 
       <div>
-        <Link href="/cart" style={{ color: 'white' }}>
-          🛒
-        </Link>
+        <Badge count={cartCount} size='small'>
+          <button
+            onClick={openCart}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '20px',
+              cursor: 'pointer',
+              padding: '4px 8px',
+            }}
+          >
+            <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+          </button>
+        </Badge>
       </div>
     </Header>
   );
-}; 
+};

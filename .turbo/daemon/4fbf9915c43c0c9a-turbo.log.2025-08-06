@@ -3820,3 +3820,98 @@
 2025-08-06T06:52:04.064570Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
 2025-08-06T06:52:35.563406Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".gitignore")}
 2025-08-06T06:52:35.563429Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:32:14.205144Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/1.cookie"), AnchoredSystemPathBuf(".turbo/cookies/.turbo-cookie")}
+2025-08-06T15:32:14.205204Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:33:26.210890Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:33:26.210919Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }}))
+2025-08-06T15:33:26.405637Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:33:26.405666Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }}))
+2025-08-06T15:33:26.430045Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:33:37.612878Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:33:37.612909Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:33:50.007257Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/CartDrawer.tsx")}
+2025-08-06T15:33:50.007536Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:34:00.607559Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:34:00.607588Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }}))
+2025-08-06T15:34:10.506348Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:34:10.506366Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:34:22.506412Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/CartDrawer.tsx")}
+2025-08-06T15:34:22.506426Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:34:32.306531Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx"), AnchoredSystemPathBuf("apps/host/src/components/CartDrawer.tsx"), AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:34:32.306544Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }, WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:34:32.337330Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:34:46.807033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:34:46.807054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:35:02.930388Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:35:02.930434Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:35:42.107867Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/CartDrawer.tsx"), AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:35:42.108520Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:35:42.179911Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:35:42.207475Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css"), AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:35:42.207487Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }, WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:35:42.207513Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:35:42.208839Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:39:08.708559Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:39:08.708589Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:39:26.008758Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:39:26.008769Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }}))
+2025-08-06T15:39:42.222422Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:39:42.222578Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:39:42.459850Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx")}
+2025-08-06T15:39:42.459870Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:39:42.459913Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:39:42.509383Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:39:42.509393Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }}))
+2025-08-06T15:40:05.909809Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/components/Basket.tsx"), AnchoredSystemPathBuf("libs/data-access/src/api.ts")}
+2025-08-06T15:40:05.909863Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/data-access"), path: AnchoredSystemPathBuf("libs/data-access") }, WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:42:20.011452Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:42:20.011515Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:42:32.310668Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:42:32.310698Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:42:32.359405Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:43:01.611202Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:43:01.611231Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:43:09.711923Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:43:09.711933Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:43:09.717336Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:44:39.513072Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-08-06T15:44:39.513094Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-08-06T15:44:39.918383Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-08-06T15:44:39.918394Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-08-06T15:44:40.011173Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/node_modules")}
+2025-08-06T15:44:40.011182Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:44:40.011205Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:44:40.411593Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("_tmp_65553_3a403c35dd401c3f5bc23cf6b91f9de4")}
+2025-08-06T15:44:40.411604Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:44:40.512383Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(""), AnchoredSystemPathBuf("_tmp_65553_3a403c35dd401c3f5bc23cf6b91f9de4")}
+2025-08-06T15:44:40.512392Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:44:40.813106Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-08-06T15:44:40.813116Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-08-06T15:44:41.111920Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/node_modules")}
+2025-08-06T15:44:41.111929Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:44:41.546345Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:44:42.015950Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".husky/_/h"), AnchoredSystemPathBuf(".husky/_/husky.sh"), AnchoredSystemPathBuf(".husky/_/post-merge"), AnchoredSystemPathBuf(".husky/_/pre-applypatch"), AnchoredSystemPathBuf(".husky/_/post-checkout"), AnchoredSystemPathBuf(".husky/_/post-commit"), AnchoredSystemPathBuf(".husky/_/.gitignore"), AnchoredSystemPathBuf(".husky/_/pre-merge-commit"), AnchoredSystemPathBuf(".husky/_/pre-commit"), AnchoredSystemPathBuf(".husky/_/applypatch-msg"), AnchoredSystemPathBuf(".husky/_/pre-push"), AnchoredSystemPathBuf(".husky/_/prepare-commit-msg"), AnchoredSystemPathBuf(".husky/_/pre-auto-gc"), AnchoredSystemPathBuf(".husky/_/pre-rebase"), AnchoredSystemPathBuf(".husky/_/post-applypatch"), AnchoredSystemPathBuf(".husky/_/commit-msg"), AnchoredSystemPathBuf(".husky/_/post-rewrite")}
+2025-08-06T15:44:42.015961Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:46:02.800481Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/postcss.config.mjs")}
+2025-08-06T15:46:02.800508Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:46:39.597529Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:46:39.597546Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:47:33.097370Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/postcss.config.mjs")}
+2025-08-06T15:47:33.097395Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:47:33.097426Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:47:43.798055Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/postcss.config.mjs")}
+2025-08-06T15:47:43.798065Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:47:43.798088Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T15:47:48.996868Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/2.cookie")}
+2025-08-06T15:47:48.996879Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T15:49:03.898903Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:49:03.898924Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:49:13.698593Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/host/src/app/globals.css")}
+2025-08-06T15:49:13.698631Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@kayra/host"), path: AnchoredSystemPathBuf("apps/host") }}))
+2025-08-06T15:49:13.733562Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-08-06T16:26:30.804535Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".husky/pre-commit")}
+2025-08-06T16:26:30.805284Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T16:26:30.887791Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".husky/pre-commit")}
+2025-08-06T16:26:30.887800Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-08-06T16:26:37.388205Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".husky/pre-commit")}
+2025-08-06T16:26:37.388216Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))

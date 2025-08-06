@@ -167,16 +167,6 @@ export const api = createApi({
         method: 'POST',
         body: credentials,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          // Store token and user data on successful login
-          storeToken(data.token);
-          storeUser(data.user);
-        } catch (error) {
-          console.error('Login failed:', error);
-        }
-      },
       invalidatesTags: ['Auth'],
     }),
 

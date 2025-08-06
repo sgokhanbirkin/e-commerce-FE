@@ -127,24 +127,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       //   user: result.user,
       // });
 
-      // Store token and user data
+      // Store token and user data immediately
       storeToken(result.token);
       storeUser(result.user);
 
+      // Update state immediately
       setToken(result.token);
       setUser(result.user);
 
-      // Hemen loading'i kapat
+      // Close loading immediately
       setIsLoading(false);
 
-      // Profile fetch'i arka planda yap, hata olsa bile login başarılı say
+      // Force profile refetch after token update
       if (result.token) {
-        // Profile fetch'i non-blocking yap
+        // Small delay to ensure token is set
         setTimeout(() => {
           refetchProfile().catch(error => {
-            console.log('Profile fetch failed, but login successful:', error);
+            // console.log('Profile fetch failed, but login successful:', error);
           });
-        }, 100);
+        }, 200);
       }
 
       return true;

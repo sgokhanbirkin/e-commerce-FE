@@ -48,41 +48,6 @@ export interface Cart {
   totalPrice: number;
 }
 
-// API Response types
-export interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message?: string;
-}
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-}
-
-// Error types
-export interface ApiError {
-  status: number;
-  data: string;
-  message?: string;
-}
-
-// Filter and search types
-export interface ProductFilters {
-  category?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  rating?: number;
-  search?: string;
-}
-
-export interface SortOptions {
-  field: 'price' | 'title' | 'rating' | 'createdAt';
-  direction: 'asc' | 'desc';
-}
-
 // User types (for future use)
 export interface User extends BaseEntity {
   email: string;
@@ -137,27 +102,7 @@ export interface Category {
 // Utility types
 export type LoadingState = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-export interface AsyncState<T> {
-  data: T | null;
-  loading: LoadingState;
-  error: string | null;
-}
-
 // Redux store types
 export interface RootState {
   api: any; // RTK Query state
-  cart?: CartState;
-  user?: UserState;
-}
-
-export interface CartState {
-  items: CartItem[];
-  loading: LoadingState;
-  error: string | null;
-}
-
-export interface UserState {
-  user: User | null;
-  loading: LoadingState;
-  error: string | null;
 }

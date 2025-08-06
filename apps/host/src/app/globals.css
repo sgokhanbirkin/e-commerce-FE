@@ -124,3 +124,50 @@ body {
 .ant-config-provider {
   isolation: isolate;
 }
+
+/* Navbar responsive styles */
+.desktop-menu {
+  display: none;
+}
+
+.mobile-menu-button {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: block !important;
+  }
+  
+  .mobile-menu-button {
+    display: none !important;
+  }
+}
+
+/* Navbar logo responsive */
+.logo a {
+  font-size: clamp(16px, 4vw, 20px) !important;
+  white-space: nowrap;
+}
+
+/* Mobile menu drawer improvements */
+.ant-drawer-body {
+  padding: 0;
+}
+
+.ant-drawer-body .ant-menu {
+  border-right: none;
+}
+
+/* Responsive header padding */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    padding: 0 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-layout-header {
+    padding: 0 8px !important;
+  }
+}

@@ -25,11 +25,16 @@ export const api = createApi({
     prepareHeaders: headers => {
       headers.set('Content-Type', 'application/json');
       // Önce user token, yoksa guest token
-      const token = getToken() || getGuestToken();
-      console.log(
-        '🔑 Token being sent:',
-        token ? `${token.substring(0, 10)}...` : 'NO TOKEN'
-      );
+      const userToken = getToken();
+      const guestToken = getGuestToken();
+      const token = userToken || guestToken;
+
+      console.log('🔑 Token Debug:', {
+        userToken: userToken ? 'exists' : 'null',
+        guestToken: guestToken ? 'exists' : 'null',
+        finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
+        tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
+      });
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

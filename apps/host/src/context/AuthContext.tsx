@@ -122,16 +122,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       const result = await loginUser({ email, password }).unwrap();
 
-      // console.log('Login Success:', {
-      //   token: result.token ? 'exists' : 'null',
-      //   user: result.user,
-      // });
+      console.log('🔐 Login Success:', {
+        token: result.token ? 'exists' : 'null',
+        user: result.user,
+        tokenLength: result.token?.length,
+      });
 
       // Store token and user data immediately
       storeToken(result.token);
       storeUser(result.user);
 
       // Update state immediately
+      console.log(
+        '🔐 Setting token in AuthContext:',
+        result.token ? 'exists' : 'null'
+      );
       setToken(result.token);
       setUser(result.user);
 
@@ -197,6 +202,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     refreshUser,
   };
+
+  // Debug context value
+  console.log('🔐 AuthContext Value:', {
+    user: user ? 'exists' : 'null',
+    token: token ? 'exists' : 'null',
+    isAuthenticated: !!token,
+    tokenLength: token?.length,
+  });
 
   // Debug logging
   // console.log('AuthContext Debug:', {

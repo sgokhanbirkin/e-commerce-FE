@@ -1,7 +1,7 @@
 'use client';
 
 import { Layout, Typography } from 'antd';
-import { ProductsList } from '../../components/ProductsList';
+import { ProductsList } from '../components/ProductsList';
 import { useGetProductsQuery } from '@data-access/api';
 
 const { Content } = Layout;

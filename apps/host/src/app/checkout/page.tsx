@@ -198,8 +198,11 @@ export default function CheckoutPage() {
               layout='vertical'
               onFinish={handleSubmit}
               initialValues={{
-                firstName: user?.firstName || '',
-                lastName: user?.lastName || '',
+                firstName: user?.firstName || user?.name?.split(' ')[0] || '',
+                lastName:
+                  user?.lastName ||
+                  user?.name?.split(' ').slice(1).join(' ') ||
+                  '',
                 email: user?.email || '',
                 country: 'Turkey',
                 paymentMethod: 'credit_card',
@@ -505,10 +508,10 @@ export default function CheckoutPage() {
                           value
                             ? Promise.resolve()
                             : Promise.reject(
-                              new Error(
-                                'Please accept the terms and conditions'
-                              )
-                            ),
+                                new Error(
+                                  'Please accept the terms and conditions'
+                                )
+                              ),
                       },
                     ]}
                   >

@@ -52,7 +52,10 @@ export interface Cart {
 export interface User extends BaseEntity {
   email: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   avatar?: string;
+  phone?: string;
 }
 
 // Order types (for future use)

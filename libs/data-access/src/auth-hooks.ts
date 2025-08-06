@@ -1,6 +1,5 @@
 // Custom authentication hooks
 import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   useLoginUserMutation,
   useRegisterUserMutation,
@@ -8,7 +7,24 @@ import {
   useRefreshTokenMutation,
 } from './api';
 import { fetchOrCreateGuestToken } from './auth-utils';
-import { App } from 'antd';
+
+// Import useAuth from context (this will be available in the host app)
+declare function useAuth(): {
+  isAuthenticated: boolean;
+  profileLoading: boolean;
+};
+
+// Type definitions
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterCredentials {
+  email: string;
+  password: string;
+  name: string;
+}
 
 export function useEnsureGuestToken() {
   useEffect(() => {
@@ -18,21 +34,17 @@ export function useEnsureGuestToken() {
 
 export function useLogin() {
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
-  const router = useRouter();
-  const { message } = App.useApp();
 
   const login = useCallback(
     async (credentials: LoginCredentials) => {
       try {
-        const { data } = await loginUser(credentials).unwrap();
-        message.success('Login successful!');
-        router.push('/');
+        const result = await loginUser(credentials).unwrap();
+        return result;
       } catch (err) {
-        message.error('Login failed. Please check your credentials.');
-        console.error('Login error:', err);
+        throw err;
       }
     },
-    [loginUser, router, message]
+    [loginUser]
   );
 
   return { login, isLoading, error };
@@ -40,21 +52,17 @@ export function useLogin() {
 
 export function useRegister() {
   const [registerUser, { isLoading, error }] = useRegisterUserMutation();
-  const router = useRouter();
-  const { message } = App.useApp();
 
   const register = useCallback(
     async (userData: RegisterCredentials) => {
       try {
-        const { data } = await registerUser(userData).unwrap();
-        message.success('Registration successful!');
-        router.push('/');
+        const result = await registerUser(userData).unwrap();
+        return result;
       } catch (err) {
-        message.error('Registration failed. Please try again.');
-        console.error('Registration error:', err);
+        throw err;
       }
     },
-    [registerUser, router, message]
+    [registerUser]
   );
 
   return { register, isLoading, error };

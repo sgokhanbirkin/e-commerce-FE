@@ -206,7 +206,7 @@ export function clearGuestToken() {
 
 export async function fetchOrCreateGuestToken(): Promise<string> {
   if (typeof window === 'undefined') return '';
-  let token = getGuestToken();
+  let token = getGuestToken() || '';
   console.log('🔍 Current guest token:', token);
   if (!token) {
     console.log('🔄 Fetching new guest token...');
@@ -220,9 +220,10 @@ export async function fetchOrCreateGuestToken(): Promise<string> {
     console.log('📡 Guest token response status:', res.status);
     const data = await res.json();
     console.log('📦 Guest token response data:', data);
-    token = data.token;
-    setGuestToken(data.token, data.guestId);
+    token = data.token || '';
+    const guestId = data.guestId || `guest_${Date.now()}`;
+    setGuestToken(token, guestId);
     console.log('✅ New guest token set:', token);
   }
-  return token;
+  return token || '';
 }

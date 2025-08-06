@@ -151,7 +151,8 @@ export const api = createApi({
           storeToken(data.token);
           storeUser(data.user);
         } catch (error) {
-          console.error('Registration failed:', error);
+          // Don't log here, let the component handle the error
+          // console.error('Registration failed:', error);
         }
       },
       invalidatesTags: ['Auth'],

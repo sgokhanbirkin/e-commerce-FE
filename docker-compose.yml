@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # Host Application
+  host:
+    build:
+      context: .
+      dockerfile: apps/host/Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=https://fakestoreapi.com
+      - NEXT_PUBLIC_HOST_URL=http://localhost:3000
+      - NEXT_PUBLIC_PRODUCTS_URL=http://localhost:3001
+      - NEXT_PUBLIC_BASKET_URL=http://localhost:3002
+    depends_on:
+      - products
+      - basket
+    networks:
+      - kayra-network
+
+  # Products Application
+  products:
+    build:
+      context: .
+      dockerfile: apps/products/Dockerfile
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - NEXT_PUBLIC_API_URL=https://fakestoreapi.com
+      - NEXT_PUBLIC_PRODUCTS_URL=http://localhost:3001
+    networks:
+      - kayra-network
+
+  # Basket Application
+  basket:
+    build:
+      context: .
+      dockerfile: apps/basket/Dockerfile
+    ports:
+      - '3002:3002'
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+      - VITE_API_URL=https://fakestoreapi.com
+      - VITE_BASKET_URL=http://localhost:3002
+    networks:
+      - kayra-network
+
+  # Development Environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+      - '3002:3002'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: pnpm dev:all
+    networks:
+      - kayra-network
+
+networks:
+  kayra-network:
+    driver: bridge

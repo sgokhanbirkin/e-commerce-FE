@@ -1,0 +1,102 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "globalDependencies": [
+        "**/.env.*local",
+        "**/.env",
+        "env.example",
+        "apps/*/env.example"
+    ],
+    "pipeline": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                ".next/**",
+                "!.next/cache/**",
+                "dist/**"
+            ]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "start": {
+            "cache": false,
+            "persistent": true
+        },
+        "lint": {
+            "dependsOn": [
+                "^lint"
+            ]
+        },
+        "lint:fix": {
+            "dependsOn": [
+                "^lint:fix"
+            ]
+        },
+        "test": {
+            "dependsOn": [
+                "^test"
+            ],
+            "outputs": [
+                "coverage/**"
+            ]
+        },
+        "clean": {
+            "cache": false
+        },
+        "type-check": {
+            "dependsOn": [
+                "^type-check"
+            ]
+        },
+        "type-check:watch": {
+            "dependsOn": [
+                "^type-check:watch"
+            ],
+            "cache": false,
+            "persistent": true
+        },
+        "lint:check": {
+            "dependsOn": [
+                "^lint:check"
+            ]
+        },
+        "test:watch": {
+            "dependsOn": [
+                "^test:watch"
+            ],
+            "cache": false,
+            "persistent": true
+        },
+        "test:coverage": {
+            "dependsOn": [
+                "^test:coverage"
+            ],
+            "outputs": [
+                "coverage/**"
+            ]
+        },
+        "test:e2e": {
+            "dependsOn": [
+                "^test:e2e"
+            ],
+            "outputs": [
+                "test-results/**"
+            ]
+        },
+        "storybook": {
+            "cache": false,
+            "persistent": true
+        },
+        "build-storybook": {
+            "dependsOn": [
+                "^build-storybook"
+            ],
+            "outputs": [
+                "storybook-static/**"
+            ]
+        }
+    }
+}

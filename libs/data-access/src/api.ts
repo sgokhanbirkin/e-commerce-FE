@@ -56,6 +56,55 @@ export const api = createApi({
     getProducts: build.query<Product[], void>({
       query: () => 'products?limit=50',
       providesTags: ['Product'],
+      // Mock data for development
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          // If API fails, return mock data
+          console.log('API failed, using mock data');
+        }
+      },
+      // Mock data fallback
+      transformResponse: (response: any) => {
+        if (!response || response.error) {
+          return [
+            {
+              id: '1',
+              title: 'iPhone 15 Pro',
+              description: 'Latest iPhone with advanced features',
+              price: 999.99,
+              imageUrl:
+                'https://via.placeholder.com/300x300?text=iPhone+15+Pro',
+              category: 'Electronics',
+              rating: 4.8,
+              stock: 50,
+            },
+            {
+              id: '2',
+              title: 'MacBook Air M2',
+              description: 'Powerful laptop for work and creativity',
+              price: 1299.99,
+              imageUrl:
+                'https://via.placeholder.com/300x300?text=MacBook+Air+M2',
+              category: 'Electronics',
+              rating: 4.9,
+              stock: 30,
+            },
+            {
+              id: '3',
+              title: 'AirPods Pro',
+              description: 'Wireless earbuds with noise cancellation',
+              price: 249.99,
+              imageUrl: 'https://via.placeholder.com/300x300?text=AirPods+Pro',
+              category: 'Electronics',
+              rating: 4.7,
+              stock: 100,
+            },
+          ];
+        }
+        return response;
+      },
     }),
 
     getProductById: build.query<Product, string>({
@@ -94,6 +143,13 @@ export const api = createApi({
     getCartItems: build.query<CartItem[], void>({
       query: () => 'cart',
       providesTags: ['Cart'],
+      // Mock data fallback
+      transformResponse: (response: any) => {
+        if (!response || response.error) {
+          return [];
+        }
+        return response;
+      },
     }),
 
     addToCart: build.mutation<

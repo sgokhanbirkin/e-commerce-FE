@@ -17,13 +17,12 @@ const { Text } = Typography;
 const UserMenu: React.FC = () => {
   const { user, isAuthenticated, logout, isLoading } = useAuth();
   const router = useRouter();
+  const [mounted, setMounted] = React.useState(false);
 
-  // Debug logging
-  // console.log('UserMenu Debug:', {
-  //     user,
-  //     isAuthenticated,
-  //     isLoading,
-  // });
+  // SSR hydration için mounted state
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -66,6 +65,25 @@ const UserMenu: React.FC = () => {
       danger: true,
     },
   ];
+
+  // SSR hydration için mounted kontrolü
+  if (!mounted) {
+    return (
+      <Button
+        type='text'
+        style={{ height: 'auto', padding: '4px 8px' }}
+        disabled
+      >
+        <Space>
+          <Avatar
+            size='small'
+            icon={<UserOutlined />}
+            style={{ backgroundColor: '#d9d9d9' }}
+          />
+        </Space>
+      </Button>
+    );
+  }
 
   // Sadece çok kısa süreli loading göster
   if (isLoading && !isAuthenticated) {

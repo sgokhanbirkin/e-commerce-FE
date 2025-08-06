@@ -19,13 +19,20 @@ export const Navbar: React.FC = () => {
   const { data: cartItems } = useGetCartItemsQuery();
   const searchParams = useSearchParams();
   const { openCart } = useCartDrawer();
+  const [mounted, setMounted] = React.useState(false);
+
+  // SSR hydration için mounted state
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Aktif kategori seçimi için URL'den categoryId'yi alıyoruz
-  const activeKey = searchParams.get('categoryId');
+  const activeKey = mounted ? searchParams.get('categoryId') : null;
 
   // Toplam sepet adedi hesaplama
-  const cartCount =
-    cartItems?.reduce((total, item) => total + (item.quantity || 1), 0) || 0;
+  const cartCount = mounted
+    ? cartItems?.reduce((total, item) => total + (item.quantity || 1), 0) || 0
+    : 0;
 
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>

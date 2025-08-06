@@ -47,6 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   // Skip profile query if no token
   const shouldSkipProfile = !token;
@@ -109,6 +110,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Hızlı başlatma - loading'i hemen kapat
       setIsLoading(false);
+      setMounted(true);
     };
 
     // Hemen çalıştır
@@ -218,8 +220,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const contextValue: AuthContextType = {
     user,
     token,
-    isAuthenticated: !!token, // Sadece token varsa authenticated say
-    isLoading: isLoading || loginState.isLoading || logoutState.isLoading,
+    isAuthenticated: mounted && !!token, // SSR için mounted kontrolü
+    isLoading:
+      !mounted || isLoading || loginState.isLoading || logoutState.isLoading,
     login,
     logout,
     refreshUser,

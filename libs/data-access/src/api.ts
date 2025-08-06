@@ -170,6 +170,14 @@ export const api = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['Cart'],
+      async onQueryStarted(itemId, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          console.log('🛒 API: Item removed from cart successfully');
+        } catch (error) {
+          console.log('🛒 API: Item removal failed:', error);
+        }
+      },
     }),
 
     updateCartItem: build.mutation<
@@ -185,6 +193,14 @@ export const api = createApi({
         };
       },
       invalidatesTags: ['Cart'],
+      async onQueryStarted({ itemId, quantity }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          console.log('🛒 API: Cart item updated successfully');
+        } catch (error) {
+          console.log('🛒 API: Cart item update failed:', error);
+        }
+      },
     }),
 
     clearCart: build.mutation<void, void>({
@@ -197,9 +213,11 @@ export const api = createApi({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+          console.log('🛒 API: Cart cleared successfully via backend');
         } catch (error) {
-          console.log('Cart clearing failed, using mock fallback');
-          // Simulate successful cart clearing
+          console.log('🛒 API: Cart clearing failed, using mock fallback');
+          console.log('🛒 API: Error details:', error);
+          // Simulate successful cart clearing for development
         }
       },
     }),

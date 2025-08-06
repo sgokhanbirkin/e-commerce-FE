@@ -118,20 +118,29 @@ export default function CheckoutPage() {
   const handleSubmit = async (values: CheckoutFormData) => {
     setIsSubmitting(true);
     try {
+      console.log('🛒 Starting order submission...');
+
       // Simulate order creation
       await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('🛒 Order simulation completed');
 
       // Clear the cart after successful order
       try {
+        console.log('🛒 Attempting to clear cart via API...');
         await clearCart().unwrap();
+        console.log('🛒 API cart clearing successful');
         clearCartFromStorage(); // Also clear from localStorage
+        console.log('🛒 localStorage cart clearing completed');
         message.success('Order placed successfully! Cart cleared.');
       } catch (cartError) {
-        console.log('Cart clearing failed, using localStorage fallback');
+        console.log('🛒 Cart clearing failed, using localStorage fallback');
+        console.log('🛒 Cart error details:', cartError);
         clearCartFromStorage(); // Clear from localStorage as fallback
+        console.log('🛒 localStorage fallback cart clearing completed');
         message.success('Order placed successfully! Cart cleared.');
       }
 
+      console.log('🛒 Redirecting to orders page...');
       router.push('/orders');
     } catch (error) {
       console.error('Order submission error:', error);
@@ -496,10 +505,10 @@ export default function CheckoutPage() {
                           value
                             ? Promise.resolve()
                             : Promise.reject(
-                                new Error(
-                                  'Please accept the terms and conditions'
-                                )
-                              ),
+                              new Error(
+                                'Please accept the terms and conditions'
+                              )
+                            ),
                       },
                     ]}
                   >

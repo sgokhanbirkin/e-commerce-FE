@@ -80,12 +80,21 @@ export const Basket: React.FC<BasketProps> = ({
 
   const handleClearCart = async () => {
     try {
+      console.log('🛒 handleClearCart: Attempting to clear cart via API...');
       await clearCart().unwrap();
+      console.log('🛒 handleClearCart: API cart clearing successful');
       clearCartFromStorage(); // Also clear from localStorage
+      console.log('🛒 handleClearCart: localStorage cart clearing completed');
       message.success('Cart cleared successfully');
     } catch (error) {
-      console.log('Cart clearing failed, using localStorage fallback');
+      console.log(
+        '🛒 handleClearCart: Cart clearing failed, using localStorage fallback'
+      );
+      console.log('🛒 handleClearCart: Error details:', error);
       clearCartFromStorage(); // Clear from localStorage as fallback
+      console.log(
+        '🛒 handleClearCart: localStorage fallback cart clearing completed'
+      );
       message.success('Cart cleared successfully');
     }
   };

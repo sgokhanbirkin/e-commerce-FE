@@ -5,7 +5,7 @@ import { CartDrawerProvider } from '../components/CartDrawerContext';
 import { CartDrawer } from '../components/CartDrawer';
 import { Navbar } from '../components/Navbar';
 import { GuestTokenClientProvider } from '../components/GuestTokenClientProvider';
-import RouteChangeLoader from '../components/RouteChangeLoader';
+
 import { App } from 'antd';
 import './globals.css';
 
@@ -38,7 +38,6 @@ export default function RootLayout({
           <App>
             <CartDrawerProvider>
               <GuestTokenClientProvider>
-                <RouteChangeLoader />
                 <Navbar />
                 {children}
                 <CartDrawer />

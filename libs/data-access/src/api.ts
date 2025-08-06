@@ -29,12 +29,12 @@ export const api = createApi({
       const guestToken = getGuestToken();
       const token = userToken || guestToken;
 
-      console.log('🔑 Token Debug:', {
-        userToken: userToken ? 'exists' : 'null',
-        guestToken: guestToken ? 'exists' : 'null',
-        finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
-        tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
-      });
+      // console.log('🔑 Token Debug:', {
+      //   userToken: userToken ? 'exists' : 'null',
+      //   guestToken: guestToken ? 'exists' : 'null',
+      //   finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
+      //   tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
+      // });
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

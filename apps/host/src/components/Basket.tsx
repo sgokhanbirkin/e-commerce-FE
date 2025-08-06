@@ -100,14 +100,7 @@ export const Basket: React.FC<BasketProps> = ({
   };
 
   if (isLoading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <Spin size='large' />
-        <div style={{ marginTop: '16px' }}>
-          <Text type='secondary'>Sepet yükleniyor...</Text>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (error) {
@@ -156,10 +149,17 @@ export const Basket: React.FC<BasketProps> = ({
               flexWrap: 'wrap',
               wordBreak: 'normal',
               whiteSpace: 'normal',
-              minWidth: '300px'
+              minWidth: '300px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+                flex: 1,
+              }}
+            >
               <div
                 style={{
                   width: '60px',
@@ -191,17 +191,40 @@ export const Basket: React.FC<BasketProps> = ({
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ marginBottom: '4px' }}>
-                  <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+                  <Text
+                    strong
+                    style={{
+                      wordBreak: 'normal',
+                      whiteSpace: 'normal',
+                      overflowWrap: 'break-word',
+                    }}
+                  >
                     {item.product?.title || 'Unknown Product'}
                   </Text>
                   {item.variant && (
-                    <Text type='secondary' style={{ marginLeft: '8px', wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+                    <Text
+                      type='secondary'
+                      style={{
+                        marginLeft: '8px',
+                        wordBreak: 'normal',
+                        whiteSpace: 'normal',
+                        overflowWrap: 'break-word',
+                      }}
+                    >
                       ({item.variant.name}: {item.variant.value})
                     </Text>
                   )}
                 </div>
                 <div>
-                  <Text type='secondary' style={{ fontSize: '12px', wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+                  <Text
+                    type='secondary'
+                    style={{
+                      fontSize: '12px',
+                      wordBreak: 'normal',
+                      whiteSpace: 'normal',
+                      overflowWrap: 'break-word',
+                    }}
+                  >
                     {item.product?.description
                       ? item.product.description.length > 80
                         ? `${item.product.description.substring(0, 80)}...`
@@ -216,53 +239,77 @@ export const Basket: React.FC<BasketProps> = ({
                 </div>
               </div>
             </div>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              flexShrink: 0,
-              minWidth: 0,
-              flexWrap: 'wrap'
-            }}>
-              <div style={{
-                minWidth: '50px',
-                textAlign: 'right',
-                wordBreak: 'normal',
-                whiteSpace: 'normal',
-                overflowWrap: 'break-word'
-              }}>
-                <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', fontSize: '14px' }}>
-                  ${(item.variant?.price ?? item.product?.price ?? 0).toFixed(2)}
-                </Text>
-              </div>
-              <div style={{
+            <div
+              style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                wordBreak: 'normal',
-                whiteSpace: 'normal'
-              }}>
-                <Text style={{ wordBreak: 'normal', whiteSpace: 'normal' }}>Qty:</Text>
+                gap: '12px',
+                flexShrink: 0,
+                minWidth: 0,
+                flexWrap: 'wrap',
+              }}
+            >
+              <div
+                style={{
+                  minWidth: '50px',
+                  textAlign: 'right',
+                  wordBreak: 'normal',
+                  whiteSpace: 'normal',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                <Text
+                  strong
+                  style={{
+                    wordBreak: 'normal',
+                    whiteSpace: 'normal',
+                    fontSize: '14px',
+                  }}
+                >
+                  $
+                  {(item.variant?.price ?? item.product?.price ?? 0).toFixed(2)}
+                </Text>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  wordBreak: 'normal',
+                  whiteSpace: 'normal',
+                }}
+              >
+                <Text style={{ wordBreak: 'normal', whiteSpace: 'normal' }}>
+                  Qty:
+                </Text>
                 <InputNumber
                   min={1}
                   max={99}
                   value={item.quantity}
-                  onChange={value =>
-                    handleUpdateQuantity(item.id, value || 1)
-                  }
+                  onChange={value => handleUpdateQuantity(item.id, value || 1)}
                   size='small'
                   style={{ width: '64px' }}
                 />
               </div>
-              <div style={{
-                minWidth: '70px',
-                textAlign: 'right',
-                wordBreak: 'normal',
-                whiteSpace: 'normal',
-                overflowWrap: 'break-word'
-              }}>
-                <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', fontSize: '14px' }}>
-                  ${(
+              <div
+                style={{
+                  minWidth: '70px',
+                  textAlign: 'right',
+                  wordBreak: 'normal',
+                  whiteSpace: 'normal',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                <Text
+                  strong
+                  style={{
+                    wordBreak: 'normal',
+                    whiteSpace: 'normal',
+                    fontSize: '14px',
+                  }}
+                >
+                  $
+                  {(
                     (item.variant?.price ?? item.product?.price ?? 0) *
                     item.quantity
                   ).toFixed(2)}
@@ -275,7 +322,11 @@ export const Basket: React.FC<BasketProps> = ({
                 loading={removeLoading}
                 onClick={() => handleRemoveFromCart(item.id)}
                 size='small'
-                style={{ wordBreak: 'normal', whiteSpace: 'normal', padding: '4px 8px' }}
+                style={{
+                  wordBreak: 'normal',
+                  whiteSpace: 'normal',
+                  padding: '4px 8px',
+                }}
               >
                 Remove
               </Button>
@@ -286,14 +337,23 @@ export const Basket: React.FC<BasketProps> = ({
 
       <Divider />
 
-      <div style={{
-        padding: '16px',
-        background: '#fafafa',
-        borderRadius: '8px',
-        marginTop: '16px',
-        border: '1px solid #f0f0f0'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+      <div
+        style={{
+          padding: '16px',
+          background: '#fafafa',
+          borderRadius: '8px',
+          marginTop: '16px',
+          border: '1px solid #f0f0f0',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '16px',
+          }}
+        >
           <Text strong>Total Items: {calculateTotalItems()}</Text>
           <Text strong style={{ fontSize: '18px', color: '#1890ff' }}>
             Total: ${calculateTotal().toFixed(2)}

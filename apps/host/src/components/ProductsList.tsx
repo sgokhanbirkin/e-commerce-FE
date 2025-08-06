@@ -40,14 +40,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   const { openCart } = useCartDrawer();
 
   if (isLoading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <Spin size='large' />
-        <div style={{ marginTop: '16px' }}>
-          <Text type='secondary'>Ürünler yükleniyor...</Text>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   if (error) {

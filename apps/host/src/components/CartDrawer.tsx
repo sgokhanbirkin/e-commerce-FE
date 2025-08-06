@@ -83,9 +83,7 @@ export function CartDrawer() {
     >
       <div style={{ padding: '16px' }}>
         <Space direction='vertical' style={{ width: '100%' }}>
-          {isLoading ? (
-            <Text>Sepet yükleniyor...</Text>
-          ) : error ? (
+          {error ? (
             <Text type='danger'>Sepet yüklenemedi</Text>
           ) : cartItems.length === 0 ? (
             <Text>Sepetiniz boş</Text>

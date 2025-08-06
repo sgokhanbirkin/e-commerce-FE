@@ -22,15 +22,15 @@ export const storeToken = (token: string, expiresIn?: number): void => {
     expiresAt: expiresIn ? Date.now() + expiresIn * 1000 : undefined,
   };
 
-  console.log('🔐 storeToken Debug:', {
-    token: token ? 'exists' : 'null',
-    tokenLength: token?.length,
-    expiresIn,
-    expiresAt: tokenData.expiresAt,
-  });
+  // console.log('🔐 storeToken Debug:', {
+  //   token: token ? 'exists' : 'null',
+  //   tokenLength: token?.length,
+  //   expiresIn,
+  //   expiresAt: tokenData.expiresAt,
+  // });
 
   localStorage.setItem('jwt_token', JSON.stringify(tokenData));
-  console.log('🔐 Token stored in localStorage');
+  // console.log('🔐 Token stored in localStorage');
 };
 
 /**
@@ -41,10 +41,10 @@ export const getToken = (): string | null => {
 
   try {
     const tokenData = localStorage.getItem('jwt_token');
-    console.log('🔐 getToken Debug:', {
-      tokenData: tokenData ? 'exists' : 'null',
-      tokenDataLength: tokenData?.length,
-    });
+    // console.log('🔐 getToken Debug:', {
+    //   tokenData: tokenData ? 'exists' : 'null',
+    //   tokenDataLength: tokenData?.length,
+    // });
 
     if (
       !tokenData ||
@@ -58,15 +58,15 @@ export const getToken = (): string | null => {
 
     // Check if token is expired
     if (parsed.expiresAt && Date.now() > parsed.expiresAt) {
-      console.log('🔐 Token expired, removing...');
+      // console.log('🔐 Token expired, removing...');
       removeToken();
       return null;
     }
 
-    console.log('🔐 Token retrieved successfully:', {
-      tokenExists: !!parsed.token,
-      tokenLength: parsed.token?.length,
-    });
+    // console.log('🔐 Token retrieved successfully:', {
+    //   tokenExists: !!parsed.token,
+    //   tokenLength: parsed.token?.length,
+    // });
 
     return parsed.token;
   } catch (error) {

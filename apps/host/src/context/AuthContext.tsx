@@ -72,30 +72,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Initialize auth state on mount
   useEffect(() => {
     const initializeAuth = () => {
-      console.log('🔐 Starting AuthContext initialization...');
+      // console.log('🔐 Starting AuthContext initialization...');
 
       const storedToken = getToken();
       const storedUser = getUser();
 
-      console.log('🔐 AuthContext Initialize:', {
-        storedToken: storedToken ? 'exists' : 'null',
-        storedUser: storedUser ? 'exists' : 'null',
-        tokenLength: storedToken?.length,
-      });
+      // console.log('🔐 AuthContext Initialize:', {
+      //   storedToken: storedToken ? 'exists' : 'null',
+      //   storedUser: storedUser ? 'exists' : 'null',
+      //   tokenLength: storedToken?.length,
+      // });
 
       if (storedToken) {
-        console.log(
-          '🔐 Setting token from localStorage:',
-          `${storedToken.substring(0, 20)}...`
-        );
+        // console.log(
+        //   '🔐 Setting token from localStorage:',
+        //   `${storedToken.substring(0, 20)}...`
+        // );
         setToken(storedToken);
 
         if (storedUser) {
-          console.log('🔐 Setting user from localStorage');
+          // console.log('🔐 Setting user from localStorage');
           setUser(storedUser);
         }
       } else {
-        console.log('🔐 No token found in localStorage');
+        // console.log('🔐 No token found in localStorage');
       }
 
       // Hızlı başlatma - loading'i hemen kapat
@@ -135,21 +135,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       const result = await loginUser({ email, password }).unwrap();
 
-      console.log('🔐 Login Success:', {
-        token: result.token ? 'exists' : 'null',
-        user: result.user,
-        tokenLength: result.token?.length,
-      });
+      // console.log('🔐 Login Success:', {
+      //   token: result.token ? 'exists' : 'null',
+      //   user: result.user,
+      //   tokenLength: result.token?.length,
+      // });
 
       // Store token and user data immediately
       storeToken(result.token);
       storeUser(result.user);
 
       // Update state immediately
-      console.log(
-        '🔐 Setting token in AuthContext:',
-        result.token ? 'exists' : 'null'
-      );
+      // console.log(
+      //   '🔐 Setting token in AuthContext:',
+      //   result.token ? 'exists' : 'null'
+      // );
       setToken(result.token);
       setUser(result.user);
 
@@ -217,12 +217,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Debug context value
-  console.log('🔐 AuthContext Value:', {
-    user: user ? 'exists' : 'null',
-    token: token ? 'exists' : 'null',
-    isAuthenticated: !!token,
-    tokenLength: token?.length,
-  });
+  // console.log('🔐 AuthContext Value:', {
+  //   user: user ? 'exists' : 'null',
+  //   token: token ? 'exists' : 'null',
+  //   isAuthenticated: !!token,
+  //   tokenLength: token?.length,
+  // });
 
   // Debug logging
   // console.log('AuthContext Debug:', {

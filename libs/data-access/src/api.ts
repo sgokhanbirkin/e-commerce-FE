@@ -70,29 +70,29 @@ export const api = createApi({
         if (!response || response.error) {
           return [
             {
-              id: 1,
+              id: '1',
               title: 'iPhone 15 Pro',
               description: 'Latest iPhone with advanced features',
               price: 999.99,
               imageUrl:
                 'https://via.placeholder.com/300x300?text=iPhone+15+Pro',
               category: 'Electronics',
-              rating: { rate: 4.8, count: 120 },
+              rating: 4.8,
               stock: 50,
             },
             {
-              id: 2,
+              id: '2',
               title: 'MacBook Air M2',
               description: 'Powerful laptop for work and creativity',
               price: 1299.99,
               imageUrl:
                 'https://via.placeholder.com/300x300?text=MacBook+Air+M2',
               category: 'Electronics',
-              rating: { rate: 4.9, count: 85 },
+              rating: 4.9,
               stock: 30,
             },
             {
-              id: 3,
+              id: '3',
               title: 'AirPods Pro',
               description: 'Wireless earbuds with noise cancellation',
               price: 249.99,

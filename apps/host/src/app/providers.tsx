@@ -37,13 +37,15 @@ export function Providers({ children }: ProvidersProps) {
         // React 19 uyumluluğu için ek ayarlar
         wave={{ disabled: true }}
         // React 19 uyumluluğu için
-        autoInsertSpaceInButton={false}
-        // React 19 uyumluluğu için
         virtual={false}
         // React 19 uyumluluğu için
         getPopupContainer={triggerNode =>
           triggerNode?.parentElement || document.body
         }
+        // React 19 uyumluluğu için yeni format
+        button={{
+          autoInsertSpace: false,
+        }}
       >
         <AuthProvider>{children}</AuthProvider>
       </ConfigProvider>

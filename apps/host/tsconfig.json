@@ -23,8 +23,7 @@
     "paths": {
       "@/*": ["./*"],
       "@data-access/*": ["../../libs/data-access/src/*"],
-      "@data/*": ["../../libs/data-access/src/*"],
-      "@ui/*": ["../../libs/ui/src/*"]
+      "@data/*": ["../../libs/data-access/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

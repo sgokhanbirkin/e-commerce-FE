@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import { store } from '@data-access/store';
 import { AuthProvider } from '../context';
-import { setupAntdCompat, suppressAntdWarnings } from '../utils/antd-compat';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -13,11 +12,6 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   const [cartOpen, setCartOpen] = useState(false);
-
-  // React 19 uyumluluğu için setup
-  useEffect(() => {
-    suppressAntdWarnings();
-  }, []);
 
   return (
     <Provider store={store}>
@@ -30,14 +24,12 @@ export function Providers({ children }: ProvidersProps) {
         // React 19 uyumluluğu için
         legacyLocale={false}
         // React 19 uyumluluğu için ek ayarlar
-        componentSize="middle"
+        componentSize='middle'
         space={{ size: 'middle' }}
         // Wave effect'i devre dışı bırak (React 19 uyumluluk sorunu için)
         wave={{ disabled: true }}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </ConfigProvider>
     </Provider>
   );

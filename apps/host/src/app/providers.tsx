@@ -6,12 +6,23 @@ import { ConfigProvider } from 'antd';
 import { store } from '@data-access/store';
 import { AuthProvider } from '../hooks/useAuth';
 
+// React 19 uyumluluğu için özel hook
+const useAntdCompat = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient;
+};
+
 interface ProvidersProps {
   children: React.ReactNode;
 }
 
 export function Providers({ children }: ProvidersProps) {
-  const [cartOpen, setCartOpen] = useState(false);
+  const isClient = useAntdCompat();
 
   return (
     <Provider store={store}>
@@ -23,6 +34,16 @@ export function Providers({ children }: ProvidersProps) {
         }}
         componentSize='middle'
         space={{ size: 'middle' }}
+        // React 19 uyumluluğu için ek ayarlar
+        wave={{ disabled: true }}
+        // React 19 uyumluluğu için
+        autoInsertSpaceInButton={false}
+        // React 19 uyumluluğu için
+        virtual={false}
+        // React 19 uyumluluğu için
+        getPopupContainer={triggerNode =>
+          triggerNode?.parentElement || document.body
+        }
       >
         <AuthProvider>{children}</AuthProvider>
       </ConfigProvider>

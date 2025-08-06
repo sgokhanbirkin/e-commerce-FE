@@ -48,6 +48,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Skip profile query if no token
+  const shouldSkipProfile = !token;
+
   // RTK Query hooks
   const [loginUser, loginState] = useLoginUserMutation();
   const [logoutUser, logoutState] = useLogoutMutation();
@@ -112,9 +115,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       storeUser(profileData);
     }
   }, [profileData]);
-
-  // Skip profile query if no token
-  const shouldSkipProfile = !token;
 
   // Login function
   const login = async (email: string, password: string): Promise<boolean> => {

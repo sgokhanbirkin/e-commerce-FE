@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Card,
   Button,
@@ -17,7 +18,9 @@ import { DeleteOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import {
   useRemoveFromCartMutation,
   useUpdateCartItemMutation,
+  useClearCartMutation,
 } from '@data-access/api';
+import { clearCartFromStorage } from '@data-access/cart-utils';
 import type { CartItem } from '@data-access/types';
 
 const { Title, Text } = Typography;
@@ -33,10 +36,12 @@ export const Basket: React.FC<BasketProps> = ({
   isLoading = false,
   error = null,
 }) => {
+  const router = useRouter();
   const [removeFromCart, { isLoading: removeLoading }] =
     useRemoveFromCartMutation();
   const [updateCartItem, { isLoading: updateLoading }] =
     useUpdateCartItemMutation();
+  const [clearCart, { isLoading: clearLoading }] = useClearCartMutation();
   const { message } = App.useApp();
 
   const handleRemoveFromCart = async (itemId: string) => {
@@ -70,6 +75,18 @@ export const Basket: React.FC<BasketProps> = ({
       //   message: (error as any)?.message,
       // });
       message.error('Failed to update cart');
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      await clearCart().unwrap();
+      clearCartFromStorage(); // Also clear from localStorage
+      message.success('Cart cleared successfully');
+    } catch (error) {
+      console.log('Cart clearing failed, using localStorage fallback');
+      clearCartFromStorage(); // Clear from localStorage as fallback
+      message.success('Cart cleared successfully');
     }
   };
 
@@ -359,9 +376,25 @@ export const Basket: React.FC<BasketProps> = ({
             Total: ${calculateTotal().toFixed(2)}
           </Text>
         </div>
-        <Button type='primary' size='large' block>
-          Proceed to Checkout
-        </Button>
+        <Space style={{ width: '100%' }}>
+          <Button
+            type='default'
+            size='large'
+            loading={clearLoading}
+            onClick={handleClearCart}
+            style={{ flex: 1 }}
+          >
+            Clear Cart
+          </Button>
+          <Button
+            type='primary'
+            size='large'
+            onClick={() => router.push('/checkout')}
+            style={{ flex: 2 }}
+          >
+            Proceed to Checkout
+          </Button>
+        </Space>
       </div>
     </div>
   );

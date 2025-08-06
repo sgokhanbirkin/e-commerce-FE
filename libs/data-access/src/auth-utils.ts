@@ -115,7 +115,7 @@ export const decodeToken = (token: string): any => {
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split('')
-        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .map(c => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
         .join('')
     );
     return JSON.parse(jsonPayload);
@@ -153,3 +153,43 @@ export const setupAuthInterceptor = (api: any): void => {
   // or handle 401 responses globally
   console.log('Auth interceptor setup complete');
 };
+
+export function getGuestToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('guest_token');
+}
+
+export function setGuestToken(token: string, guestId: string) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('guest_token', token);
+  localStorage.setItem('guest_id', guestId);
+}
+
+export function clearGuestToken() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem('guest_token');
+  localStorage.removeItem('guest_id');
+}
+
+export async function fetchOrCreateGuestToken(): Promise<string> {
+  if (typeof window === 'undefined') return '';
+  let token = getGuestToken();
+  console.log('🔍 Current guest token:', token);
+  if (!token) {
+    console.log('🔄 Fetching new guest token...');
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api'}/auth/guest`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    console.log('📡 Guest token response status:', res.status);
+    const data = await res.json();
+    console.log('📦 Guest token response data:', data);
+    token = data.token;
+    setGuestToken(data.token, data.guestId);
+    console.log('✅ New guest token set:', token);
+  }
+  return token;
+}

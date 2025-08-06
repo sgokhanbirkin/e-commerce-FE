@@ -11,12 +11,15 @@ export interface Product extends BaseEntity {
   title: string;
   price: number;
   description: string;
-  category: string;
+  category: string | Category;
   imageUrl: string;
   rating?: {
     rate: number;
     count: number;
   };
+  reviews?: Review[];
+  averageRating?: number;
+  reviewCount?: number;
 }
 
 // Variant types
@@ -111,6 +114,10 @@ export interface Review extends BaseEntity {
   userId: string;
   rating: number;
   comment: string;
+  user?: {
+    name: string;
+    email: string;
+  };
   userName?: string;
   userAvatar?: string;
 }

@@ -92,7 +92,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (storedUser) {
           // console.log('🔐 Setting user from localStorage');
-          setUser(storedUser);
+          // Convert AuthUser to User type
+          const user: User = {
+            id: parseInt(storedUser.id),
+            email: storedUser.email,
+            name: storedUser.name,
+            firstName: storedUser.name?.split(' ')[0],
+            lastName: storedUser.name?.split(' ').slice(1).join(' ') || '',
+            phone: '',
+          };
+          setUser(user);
         }
       } else {
         // console.log('🔐 No token found in localStorage');

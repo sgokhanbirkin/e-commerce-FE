@@ -20,7 +20,7 @@ import {
   CarOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../../context';
+import { useAuth } from '../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useGetOrdersQuery } from '@data-access/api';
 import type { Order } from '@data-access/types';

@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useRegisterUserMutation } from '@data-access/api';
-import { withPublicRoute } from '../../context/AuthContext';
+import { withPublicRoute } from '../../hooks/useAuth';
 
 const { Title, Text } = Typography;
 

@@ -19,7 +19,7 @@ import {
   DeleteOutlined,
   EnvironmentOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../../../context';
+import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import {
   useGetAddressesQuery,
@@ -27,7 +27,7 @@ import {
   useUpdateAddressMutation,
   useDeleteAddressMutation,
 } from '@data-access/api';
-import AddressForm from '../../../components/AddressForm';
+import AddressForm from '../../../components/features/checkout/AddressForm';
 import type { Address } from '@data-access/types';
 
 const { Title, Text } = Typography;

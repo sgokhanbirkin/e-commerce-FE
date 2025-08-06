@@ -9,7 +9,7 @@ import {
   ShoppingOutlined,
   EnvironmentOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../context';
+import { useAuth } from '../../hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
 const { Text } = Typography;

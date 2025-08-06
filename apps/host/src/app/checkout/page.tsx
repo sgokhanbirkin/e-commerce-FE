@@ -28,7 +28,7 @@ import {
   PhoneOutlined,
   MailOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../../context';
+import { useAuth } from '../../hooks/useAuth';
 import { useGetCartItemsQuery, useClearCartMutation } from '@data-access/api';
 import { clearCartFromStorage } from '@data-access/cart-utils';
 

@@ -21,8 +21,8 @@ import {
   useGetVariantsQuery,
   useAddToCartMutation,
 } from '@data-access/api';
-import { useCartDrawer } from '../../../components/CartDrawerContext';
-import { ProductReviews } from '../../../components/ProductReviews';
+import { useCartDrawer } from '../../../components/features/cart/CartDrawerContext';
+import { ProductReviews } from '../../../components/features/products/ProductReviews';
 
 const { Title, Text, Paragraph } = Typography;
 

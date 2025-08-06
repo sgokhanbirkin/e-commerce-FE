@@ -9,7 +9,7 @@ import {
   useGetCategoriesFromApiQuery,
   useGetCartItemsQuery,
 } from '@data-access/api';
-import { useCartDrawer } from './CartDrawerContext';
+import { useCartDrawer } from '../features/cart/CartDrawerContext';
 import UserMenu from './UserMenu';
 
 const { Header } = Layout;
@@ -49,21 +49,21 @@ export const Navbar: React.FC = () => {
             items={
               categories && categories.length > 0
                 ? categories.map(cat => ({
-                  key: cat.id,
-                  label: (
-                    <Link href={`/categories/${cat.id}`}>{cat.name}</Link>
-                  ),
-                }))
-                : [
-                  {
-                    key: 'no-categories',
+                    key: cat.id,
                     label: (
-                      <span style={{ color: '#999' }}>
-                        No categories available
-                      </span>
+                      <Link href={`/categories/${cat.id}`}>{cat.name}</Link>
                     ),
-                  },
-                ]
+                  }))
+                : [
+                    {
+                      key: 'no-categories',
+                      label: (
+                        <span style={{ color: '#999' }}>
+                          No categories available
+                        </span>
+                      ),
+                    },
+                  ]
             }
           />
         )}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../../hooks/useAuth';
 
 interface LoginFormProps {
   onSuccess?: () => void;
@@ -44,59 +44,67 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
       <h2>Login</h2>
 
       {error && (
-        <div style={{
-          color: '#f5222d',
-          backgroundColor: '#fff2f0',
-          border: '1px solid #ffccc7',
-          padding: '0.5rem',
-          marginBottom: '1rem',
-          borderRadius: '4px'
-        }}>
+        <div
+          style={{
+            color: '#f5222d',
+            backgroundColor: '#fff2f0',
+            border: '1px solid #ffccc7',
+            padding: '0.5rem',
+            marginBottom: '1rem',
+            borderRadius: '4px',
+          }}
+        >
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem' }}>
+          <label
+            htmlFor='email'
+            style={{ display: 'block', marginBottom: '0.5rem' }}
+          >
             Email:
           </label>
           <input
-            id="email"
-            type="email"
+            id='email'
+            type='email'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             style={{
               width: '100%',
               padding: '0.5rem',
               border: '1px solid #d9d9d9',
-              borderRadius: '4px'
+              borderRadius: '4px',
             }}
             disabled={isLoading}
           />
         </div>
 
         <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem' }}>
+          <label
+            htmlFor='password'
+            style={{ display: 'block', marginBottom: '0.5rem' }}
+          >
             Password:
           </label>
           <input
-            id="password"
-            type="password"
+            id='password'
+            type='password'
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             style={{
               width: '100%',
               padding: '0.5rem',
               border: '1px solid #d9d9d9',
-              borderRadius: '4px'
+              borderRadius: '4px',
             }}
             disabled={isLoading}
           />
         </div>
 
         <button
-          type="submit"
+          type='submit'
           disabled={isLoading}
           style={{
             width: '100%',
@@ -106,7 +114,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
             border: 'none',
             borderRadius: '4px',
             cursor: isLoading ? 'not-allowed' : 'pointer',
-            opacity: isLoading ? 0.6 : 1
+            opacity: isLoading ? 0.6 : 1,
           }}
         >
           {isLoading ? 'Logging in...' : 'Login'}
@@ -114,4 +122,4 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
       </form>
     </div>
   );
-}; 
+};

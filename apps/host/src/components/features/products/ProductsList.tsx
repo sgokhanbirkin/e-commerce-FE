@@ -4,7 +4,7 @@ import React from 'react';
 import { Card, Button, Row, Col, Typography, Spin, Alert, message } from 'antd';
 import { ShoppingCartOutlined, StarOutlined } from '@ant-design/icons';
 import { useAddToCartMutation, useGetVariantsQuery } from '@data-access/api';
-import { useCartDrawer } from './CartDrawerContext';
+import { useCartDrawer } from '../cart/CartDrawerContext';
 import type { Product } from '@data-access/types';
 import Link from 'next/link';
 

@@ -59,54 +59,28 @@ export const Basket: React.FC<BasketProps> = ({
         Shopping Cart ({calculateTotalItems()} items)
       </Title>
 
-      <List
-        itemLayout='horizontal'
-        dataSource={cartItems}
-        renderItem={item => (
-          <List.Item
-            actions={[
-              <Button
-                key='remove'
-                type='text'
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => onRemoveItem?.(item.productId)}
-                size='small'
-              >
-                Remove
-              </Button>,
-            ]}
-          >
-            <List.Item.Meta
-              avatar={
-                <div
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    background: '#f5f5f5',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
+      <div className="basket-container">
+        <List
+          itemLayout='horizontal'
+          dataSource={cartItems}
+          renderItem={item => (
+            <List.Item
+              className="basket-item"
+            >
+              <div className="item-image">
+                <img
+                  src={item.product.imageUrl}
+                  alt={item.product.title}
+                  onError={e => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML =
+                      '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; font-size: 12px;">No Image</div>';
                   }}
-                >
-                  <img
-                    src={item.product.imageUrl}
-                    alt={item.product.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                    onError={e => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      target.parentElement!.innerHTML =
-                        '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; font-size: 12px;">No Image</div>';
-                    }}
-                  />
-                </div>
-              }
-              title={
-                <div>
+                />
+              </div>
+              <div className="item-meta">
+                <div className="item-title">
                   <Text strong>{item.product.title}</Text>
                   {item.variant && (
                     <Text type='secondary' style={{ marginLeft: '8px' }}>
@@ -114,9 +88,7 @@ export const Basket: React.FC<BasketProps> = ({
                     </Text>
                   )}
                 </div>
-              }
-              description={
-                <div>
+                <div className="item-description">
                   <Text type='secondary' style={{ fontSize: '12px' }}>
                     {item.product.description.length > 80
                       ? `${item.product.description.substring(0, 80)}...`
@@ -131,41 +103,59 @@ export const Basket: React.FC<BasketProps> = ({
                     </Text>
                   </div>
                 </div>
-              }
-            />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div>
-                <Text strong>
-                  ${(item.variant?.price || item.product.price).toFixed(2)}
-                </Text>
               </div>
-              <div>
-                <Space>
-                  <Text>Qty:</Text>
-                  <InputNumber
-                    min={1}
-                    max={99}
-                    value={item.quantity}
-                    onChange={value =>
-                      onUpdateQuantity?.(item.productId, value || 1)
-                    }
-                    size='small'
-                    style={{ width: '60px' }}
-                  />
-                </Space>
+              <div className="item-controls">
+                <div>
+                  <Text strong>
+                    ${(item.variant?.price || item.product.price).toFixed(2)}
+                  </Text>
+                </div>
+                <div>
+                  <Space>
+                    <Text>Qty:</Text>
+                    <InputNumber
+                      min={1}
+                      max={99}
+                      value={item.quantity}
+                      onChange={value =>
+                        onUpdateQuantity?.(item.productId, value || 1)
+                      }
+                      size='small'
+                      style={{ width: 64 }}
+                    />
+                  </Space>
+                </div>
+                <div>
+                  <Text strong>
+                    $
+                    {(
+                      (item.variant?.price || item.product.price) * item.quantity
+                    ).toFixed(2)}
+                  </Text>
+                </div>
+                <Button
+                  type="link"
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={() => onRemoveItem?.(item.productId)}
+                  size='small'
+                >
+                  Remove
+                </Button>
               </div>
-              <div>
-                <Text strong>
-                  $
-                  {(
-                    (item.variant?.price || item.product.price) * item.quantity
-                  ).toFixed(2)}
-                </Text>
-              </div>
-            </div>
-          </List.Item>
-        )}
-      />
+            </List.Item>
+          )}
+        />
+      </div>
+
+      <div className="basket-footer">
+        <span>Total Items: {calculateTotalItems()}</span>
+        <span>Total: ${calculateTotal().toFixed(2)}</span>
+      </div>
+
+      <Button type="primary" block>
+        Proceed to Checkout
+      </Button>
 
       <Divider />
 

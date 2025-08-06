@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Layout, Typography, Card, Space } from 'antd';
+import { Layout, Typography, Card, Space, Row, Col } from 'antd';
 import { ProductsList } from '../components/ProductsList';
 import { Basket } from '../components/Basket';
 import { useGetProductsQuery } from '@data-access/api';
@@ -23,50 +23,62 @@ export default function Home() {
     <Layout style={{ minHeight: '100vh' }}>
       <Content style={{ padding: '24px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <Space direction='vertical' size='large' style={{ width: '100%' }}>
-            <Card>
-              <Title level={4}>All Products</Title>
-              <Text type='secondary'>Browse all available products.</Text>
-              {error && (
+          <Row gutter={[24, 24]}>
+            {/* Products Section */}
+            <Col xs={24} lg={16}>
+              <Card>
+                <Title level={3} style={{ marginBottom: '8px' }}>
+                  Ürünlerimiz
+                </Title>
+                <Text type='secondary'>
+                  En kaliteli ürünleri keşfedin
+                </Text>
+                {error && (
+                  <div style={{ marginTop: '16px' }}>
+                    <Text type='danger'>
+                      Ürünler yüklenirken hata oluştu: {error.toString()}
+                    </Text>
+                  </div>
+                )}
                 <div style={{ marginTop: '16px' }}>
-                  <Text type='danger'>
-                    Error loading products: {error.toString()}
-                  </Text>
+                  <ProductsList
+                    products={products || []}
+                    isLoading={isLoading}
+                    error={error}
+                  />
                 </div>
-              )}
-              <div style={{ marginTop: '16px' }}>
-                <ProductsList
-                  products={products || []}
-                  isLoading={isLoading}
-                  error={error}
-                />
-              </div>
-            </Card>
+              </Card>
+            </Col>
 
-            <Card>
-              <Title level={4}>Basket Component</Title>
-              <Text type='secondary'>
-                Shopping cart with remove and update functionality.
-              </Text>
-              {cartError && (
+            {/* Cart Section */}
+            <Col xs={24} lg={8}>
+              <Card>
+                <Title level={3} style={{ marginBottom: '8px' }}>
+                  Sepetim
+                </Title>
+                <Text type='secondary'>
+                  Alışveriş sepetiniz
+                </Text>
+                {cartError && (
+                  <div style={{ marginTop: '16px' }}>
+                    <Text type='danger'>
+                      Sepet yüklenirken hata oluştu:{' '}
+                      {typeof cartError === 'string'
+                        ? cartError
+                        : JSON.stringify(cartError)}
+                    </Text>
+                  </div>
+                )}
                 <div style={{ marginTop: '16px' }}>
-                  <Text type='danger'>
-                    Error loading cart:{' '}
-                    {typeof cartError === 'string'
-                      ? cartError
-                      : JSON.stringify(cartError)}
-                  </Text>
+                  <Basket
+                    cartItems={cartItems || []}
+                    isLoading={cartLoading}
+                    error={cartError}
+                  />
                 </div>
-              )}
-              <div style={{ marginTop: '16px' }}>
-                <Basket
-                  cartItems={cartItems || []}
-                  isLoading={cartLoading}
-                  error={cartError}
-                />
-              </div>
-            </Card>
-          </Space>
+              </Card>
+            </Col>
+          </Row>
         </div>
       </Content>
 

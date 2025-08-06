@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Form, Input, Button, Card, Typography, message } from 'antd';
+import { Form, Input, Button, Card, Typography, App } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useRegisterUserMutation } from '@data-access/api';
@@ -20,6 +20,7 @@ const RegisterPageComponent: React.FC = () => {
     const router = useRouter();
     const [registerUser, { isLoading }] = useRegisterUserMutation();
     const [form] = Form.useForm();
+    const { message } = App.useApp();
 
     const onFinish = async (values: RegisterFormData) => {
         try {

@@ -101,11 +101,14 @@ export interface Order extends BaseEntity {
 }
 
 export interface Address {
-  street: string;
+  id?: number;
+  label?: string;
+  line1: string;
+  line2?: string;
   city: string;
-  state: string;
-  zipCode: string;
+  postal: string;
   country: string;
+  phone?: string;
 }
 
 // Review types

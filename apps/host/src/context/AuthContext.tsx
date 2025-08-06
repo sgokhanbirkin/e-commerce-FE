@@ -35,8 +35,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // RTK Query hooks
   const [loginUser, loginState] = useLoginUserMutation();
   const [logoutUser, logoutState] = useLogoutMutation();
-  const { data: profileData, refetch: refetchProfile } = useGetProfileQuery(undefined, {
+  const { data: profileData, refetch: refetchProfile, isLoading: isProfileLoading } = useGetProfileQuery(undefined, {
     skip: !token, // Skip if no token
+  });
+
+  // Debug profile query
+  console.log('Profile Query Debug:', {
+    token: token ? 'exists' : 'null',
+    profileData,
+    skip: !token,
   });
 
   // Initialize auth state on mount
@@ -45,20 +52,42 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const storedToken = getToken();
       const storedUser = getUser();
 
+      console.log('AuthContext Initialize:', {
+        storedToken: storedToken ? 'exists' : 'null',
+        storedUser: storedUser ? 'exists' : 'null',
+      });
+
       if (storedToken && storedUser) {
         setToken(storedToken);
         setUser(storedUser);
       }
 
+      // Hızlı başlatma - loading'i hemen kapat
       setIsLoading(false);
     };
 
+    // Hemen çalıştır
     initializeAuth();
   }, []);
+
+  // Force loading to false after mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 50); // Daha hızlı
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Debug loading state
+  useEffect(() => {
+    console.log('Loading state changed:', isLoading);
+  }, [isLoading]);
 
   // Update user when profile data changes
   useEffect(() => {
     if (profileData) {
+      console.log('Profile data received:', profileData);
       setUser(profileData);
       storeUser(profileData);
     }
@@ -70,6 +99,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       const result = await loginUser({ email, password }).unwrap();
 
+      console.log('Login Success:', {
+        token: result.token ? 'exists' : 'null',
+        user: result.user,
+      });
+
       // Store token and user data
       storeToken(result.token);
       storeUser(result.user);
@@ -77,12 +111,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setToken(result.token);
       setUser(result.user);
 
+      // Hemen loading'i kapat
+      setIsLoading(false);
+
+      // Profile fetch'i arka planda yap, hata olsa bile login başarılı say
+      if (result.token) {
+        refetchProfile().catch(error => {
+          console.log('Profile fetch failed, but login successful:', error);
+        });
+      }
+
       return true;
     } catch (error) {
       console.error('Login failed:', error);
-      return false;
-    } finally {
       setIsLoading(false);
+      return false;
     }
   };
 
@@ -121,12 +164,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const contextValue: AuthContextType = {
     user,
     token,
-    isAuthenticated: !!token && !!user,
+    isAuthenticated: !!token, // Sadece token varsa authenticated say
     isLoading: isLoading || loginState.isLoading || logoutState.isLoading,
     login,
     logout,
     refreshUser,
   };
+
+  // Debug logging
+  console.log('AuthContext Debug:', {
+    user,
+    token: token ? 'exists' : 'null',
+    isAuthenticated: !!token && !!user,
+    isLoading: isLoading || loginState.isLoading || logoutState.isLoading,
+  });
 
   return (
     <AuthContext.Provider value={contextValue}>

@@ -33,7 +33,13 @@ export const getToken = (): string | null => {
 
   try {
     const tokenData = localStorage.getItem('jwt_token');
-    if (!tokenData) return null;
+    if (
+      !tokenData ||
+      tokenData === 'undefined' ||
+      tokenData === 'null' ||
+      tokenData === '"undefined"'
+    )
+      return null;
 
     const parsed: AuthToken = JSON.parse(tokenData);
 
@@ -82,7 +88,15 @@ export const getUser = (): AuthUser | null => {
 
   try {
     const userData = localStorage.getItem('user');
-    return userData ? JSON.parse(userData) : null;
+    if (
+      !userData ||
+      userData === 'undefined' ||
+      userData === 'null' ||
+      userData === '"undefined"'
+    )
+      return null;
+
+    return JSON.parse(userData);
   } catch (error) {
     console.error('Error parsing user data:', error);
     return null;

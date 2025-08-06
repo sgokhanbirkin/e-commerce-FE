@@ -45,12 +45,12 @@ export const Basket: React.FC<BasketProps> = ({
       message.success('Item removed from cart');
     } catch (error) {
       message.error('Failed to remove item from cart');
-      console.error('Remove from cart error:', error);
+      // console.error('Remove from cart error:', error);
     }
   };
 
   const handleUpdateQuantity = async (itemId: string, quantity: number) => {
-    console.log('🔍 handleUpdateQuantity called with:', { itemId, quantity });
+    // console.log('🔍 handleUpdateQuantity called with:', { itemId, quantity });
 
     if (quantity <= 0) {
       await handleRemoveFromCart(itemId);
@@ -58,17 +58,17 @@ export const Basket: React.FC<BasketProps> = ({
     }
 
     try {
-      console.log('🔍 Calling updateCartItem mutation...');
+      // console.log('🔍 Calling updateCartItem mutation...');
       const result = await updateCartItem({ itemId, quantity }).unwrap();
-      console.log('🔍 updateCartItem success:', result);
+      // console.log('🔍 updateCartItem success:', result);
       message.success('Cart updated');
     } catch (error) {
-      console.error('🔍 updateCartItem error:', error);
-      console.error('🔍 Error details:', {
-        status: (error as any)?.status,
-        data: (error as any)?.data,
-        message: (error as any)?.message,
-      });
+      // console.error('🔍 updateCartItem error:', error);
+      // console.error('🔍 Error details:', {
+      //   status: (error as any)?.status,
+      //   data: (error as any)?.data,
+      //   message: (error as any)?.message,
+      // });
       message.error('Failed to update cart');
     }
   };
@@ -104,7 +104,7 @@ export const Basket: React.FC<BasketProps> = ({
       <div style={{ textAlign: 'center', padding: '40px' }}>
         <Spin size='large' />
         <div style={{ marginTop: '16px' }}>
-          <Text type='secondary'>Loading cart...</Text>
+          <Text type='secondary'>Sepet yükleniyor...</Text>
         </div>
       </div>
     );
@@ -147,64 +147,61 @@ export const Basket: React.FC<BasketProps> = ({
         dataSource={cartItems}
         renderItem={item => (
           <List.Item
-            actions={[
-              <Button
-                key='remove'
-                type='text'
-                danger
-                icon={<DeleteOutlined />}
-                loading={removeLoading}
-                onClick={() => handleRemoveFromCart(item.id)}
-                size='small'
-              >
-                Remove
-              </Button>,
-            ]}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: '16px 0',
+              borderBottom: '1px solid #f0f0f0',
+              flexWrap: 'wrap',
+              wordBreak: 'normal',
+              whiteSpace: 'normal',
+              minWidth: '300px'
+            }}
           >
-            <List.Item.Meta
-              avatar={
-                <div
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
+              <div
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  background: '#f5f5f5',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  flexShrink: 0,
+                }}
+              >
+                <img
+                  src={
+                    item.product?.imageUrl ||
+                    'https://via.placeholder.com/60x60?text=No+Image'
+                  }
+                  alt={item.product?.title || 'Product'}
                   style={{
-                    width: '60px',
-                    height: '60px',
-                    background: '#f5f5f5',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
                   }}
-                >
-                  <img
-                    src={
-                      item.product?.imageUrl ||
-                      'https://via.placeholder.com/60x60?text=No+Image'
-                    }
-                    alt={item.product?.title || 'Product'}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                    onError={e => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      target.parentElement!.innerHTML =
-                        '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; font-size: 12px;">No Image</div>';
-                    }}
-                  />
-                </div>
-              }
-              title={
-                <div>
-                  <Text strong>{item.product?.title || 'Unknown Product'}</Text>
+                  onError={e => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    target.parentElement!.innerHTML =
+                      '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; font-size: 12px;">No Image</div>';
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ marginBottom: '4px' }}>
+                  <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+                    {item.product?.title || 'Unknown Product'}
+                  </Text>
                   {item.variant && (
-                    <Text type='secondary' style={{ marginLeft: '8px' }}>
+                    <Text type='secondary' style={{ marginLeft: '8px', wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
                       ({item.variant.name}: {item.variant.value})
                     </Text>
                   )}
                 </div>
-              }
-              description={
                 <div>
-                  <Text type='secondary' style={{ fontSize: '12px' }}>
+                  <Text type='secondary' style={{ fontSize: '12px', wordBreak: 'normal', whiteSpace: 'normal', overflowWrap: 'break-word' }}>
                     {item.product?.description
                       ? item.product.description.length > 80
                         ? `${item.product.description.substring(0, 80)}...`
@@ -217,39 +214,71 @@ export const Basket: React.FC<BasketProps> = ({
                     </Text>
                   </div>
                 </div>
-              }
-            />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div>
-                <Text strong>
-                  $
-                  {(item.variant?.price ?? item.product?.price ?? 0).toFixed(2)}
+              </div>
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              flexShrink: 0,
+              minWidth: 0,
+              flexWrap: 'wrap'
+            }}>
+              <div style={{
+                minWidth: '50px',
+                textAlign: 'right',
+                wordBreak: 'normal',
+                whiteSpace: 'normal',
+                overflowWrap: 'break-word'
+              }}>
+                <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', fontSize: '14px' }}>
+                  ${(item.variant?.price ?? item.product?.price ?? 0).toFixed(2)}
                 </Text>
               </div>
-              <div>
-                <Space>
-                  <Text>Qty:</Text>
-                  <InputNumber
-                    min={1}
-                    max={99}
-                    value={item.quantity}
-                    onChange={value =>
-                      handleUpdateQuantity(item.id, value || 1)
-                    }
-                    size='small'
-                    style={{ width: '60px' }}
-                  />
-                </Space>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                wordBreak: 'normal',
+                whiteSpace: 'normal'
+              }}>
+                <Text style={{ wordBreak: 'normal', whiteSpace: 'normal' }}>Qty:</Text>
+                <InputNumber
+                  min={1}
+                  max={99}
+                  value={item.quantity}
+                  onChange={value =>
+                    handleUpdateQuantity(item.id, value || 1)
+                  }
+                  size='small'
+                  style={{ width: '64px' }}
+                />
               </div>
-              <div>
-                <Text strong>
-                  $
-                  {(
+              <div style={{
+                minWidth: '70px',
+                textAlign: 'right',
+                wordBreak: 'normal',
+                whiteSpace: 'normal',
+                overflowWrap: 'break-word'
+              }}>
+                <Text strong style={{ wordBreak: 'normal', whiteSpace: 'normal', fontSize: '14px' }}>
+                  ${(
                     (item.variant?.price ?? item.product?.price ?? 0) *
                     item.quantity
                   ).toFixed(2)}
                 </Text>
               </div>
+              <Button
+                type='text'
+                danger
+                icon={<DeleteOutlined />}
+                loading={removeLoading}
+                onClick={() => handleRemoveFromCart(item.id)}
+                size='small'
+                style={{ wordBreak: 'normal', whiteSpace: 'normal', padding: '4px 8px' }}
+              >
+                Remove
+              </Button>
             </div>
           </List.Item>
         )}
@@ -257,26 +286,23 @@ export const Basket: React.FC<BasketProps> = ({
 
       <Divider />
 
-      <Card style={{ background: '#fafafa' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div>
-            <Text strong>Total Items: {calculateTotalItems()}</Text>
-            <br />
-            <Title level={3} style={{ margin: 0, color: '#1890ff' }}>
-              Total: ${calculateTotal().toFixed(2)}
-            </Title>
-          </div>
-          <Button type='primary' size='large'>
-            Proceed to Checkout
-          </Button>
+      <div style={{
+        padding: '16px',
+        background: '#fafafa',
+        borderRadius: '8px',
+        marginTop: '16px',
+        border: '1px solid #f0f0f0'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <Text strong>Total Items: {calculateTotalItems()}</Text>
+          <Text strong style={{ fontSize: '18px', color: '#1890ff' }}>
+            Total: ${calculateTotal().toFixed(2)}
+          </Text>
         </div>
-      </Card>
+        <Button type='primary' size='large' block>
+          Proceed to Checkout
+        </Button>
+      </div>
     </div>
   );
 };

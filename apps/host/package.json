@@ -15,7 +15,7 @@
     "@kayra/data-access": "workspace:*",
     "@reduxjs/toolkit": "^2.0.0",
     "@types/styled-components": "^5.1.34",
-    "antd": "^5.15.0",
+    "antd": "^5.26.7",
     "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",

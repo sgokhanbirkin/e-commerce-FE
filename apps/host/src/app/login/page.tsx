@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Form, Input, Button, Card, Typography, message, Space } from 'antd';
+import { Form, Input, Button, Card, Typography, App } from 'antd';
 import { UserOutlined, LockOutlined, LoginOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
@@ -18,6 +18,7 @@ const LoginPageComponent: React.FC = () => {
     const router = useRouter();
     const { login, isLoading } = useAuth();
     const [form] = Form.useForm();
+    const { message } = App.useApp();
 
     const onFinish = async (values: LoginFormData) => {
         try {
@@ -31,7 +32,7 @@ const LoginPageComponent: React.FC = () => {
             }
         } catch (error) {
             message.error('Login failed. Please try again.');
-            console.error('Login error:', error);
+            // console.error('Login error:', error);
         }
     };
 
@@ -122,7 +123,7 @@ const LoginPageComponent: React.FC = () => {
 
                 <div style={{ textAlign: 'center', marginTop: '24px' }}>
                     <Text type="secondary">
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <Button
                             type="link"
                             onClick={handleRegisterClick}

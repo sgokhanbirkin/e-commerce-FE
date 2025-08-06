@@ -290,7 +290,7 @@ export const withPublicRoute = <P extends object>(
 
     useEffect(() => {
       if (!isLoading && isAuthenticated) {
-        router.push('/dashboard'); // or wherever authenticated users should go
+        router.push('/'); // Redirect to home page
       }
     }, [isAuthenticated, isLoading, router]);
 

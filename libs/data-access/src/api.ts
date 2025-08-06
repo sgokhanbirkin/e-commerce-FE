@@ -25,11 +25,16 @@ export const api = createApi({
     prepareHeaders: headers => {
       headers.set('Content-Type', 'application/json');
       // Önce user token, yoksa guest token
-      const token = getToken() || getGuestToken();
-      console.log(
-        '🔑 Token being sent:',
-        token ? `${token.substring(0, 10)}...` : 'NO TOKEN'
-      );
+      const userToken = getToken();
+      const guestToken = getGuestToken();
+      const token = userToken || guestToken;
+
+      // console.log('🔑 Token Debug:', {
+      //   userToken: userToken ? 'exists' : 'null',
+      //   guestToken: guestToken ? 'exists' : 'null',
+      //   finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
+      //   tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
+      // });
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -51,6 +56,55 @@ export const api = createApi({
     getProducts: build.query<Product[], void>({
       query: () => 'products?limit=50',
       providesTags: ['Product'],
+      // Mock data for development
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          // If API fails, return mock data
+          console.log('API failed, using mock data');
+        }
+      },
+      // Mock data fallback
+      transformResponse: (response: any) => {
+        if (!response || response.error) {
+          return [
+            {
+              id: '1',
+              title: 'iPhone 15 Pro',
+              description: 'Latest iPhone with advanced features',
+              price: 999.99,
+              imageUrl:
+                'https://via.placeholder.com/300x300?text=iPhone+15+Pro',
+              category: 'Electronics',
+              rating: 4.8,
+              stock: 50,
+            },
+            {
+              id: '2',
+              title: 'MacBook Air M2',
+              description: 'Powerful laptop for work and creativity',
+              price: 1299.99,
+              imageUrl:
+                'https://via.placeholder.com/300x300?text=MacBook+Air+M2',
+              category: 'Electronics',
+              rating: 4.9,
+              stock: 30,
+            },
+            {
+              id: '3',
+              title: 'AirPods Pro',
+              description: 'Wireless earbuds with noise cancellation',
+              price: 249.99,
+              imageUrl: 'https://via.placeholder.com/300x300?text=AirPods+Pro',
+              category: 'Electronics',
+              rating: 4.7,
+              stock: 100,
+            },
+          ];
+        }
+        return response;
+      },
     }),
 
     getProductById: build.query<Product, string>({
@@ -89,6 +143,13 @@ export const api = createApi({
     getCartItems: build.query<CartItem[], void>({
       query: () => 'cart',
       providesTags: ['Cart'],
+      // Mock data fallback
+      transformResponse: (response: any) => {
+        if (!response || response.error) {
+          return [];
+        }
+        return response;
+      },
     }),
 
     addToCart: build.mutation<
@@ -109,6 +170,14 @@ export const api = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['Cart'],
+      async onQueryStarted(itemId, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          console.log('🛒 API: Item removed from cart successfully');
+        } catch (error) {
+          console.log('🛒 API: Item removal failed:', error);
+        }
+      },
     }),
 
     updateCartItem: build.mutation<
@@ -124,6 +193,14 @@ export const api = createApi({
         };
       },
       invalidatesTags: ['Cart'],
+      async onQueryStarted({ itemId, quantity }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          console.log('🛒 API: Cart item updated successfully');
+        } catch (error) {
+          console.log('🛒 API: Cart item update failed:', error);
+        }
+      },
     }),
 
     clearCart: build.mutation<void, void>({
@@ -132,6 +209,17 @@ export const api = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['Cart'],
+      // Mock data fallback for development
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          console.log('🛒 API: Cart cleared successfully via backend');
+        } catch (error) {
+          console.log('🛒 API: Cart clearing failed, using mock fallback');
+          console.log('🛒 API: Error details:', error);
+          // Simulate successful cart clearing for development
+        }
+      },
     }),
 
     // Authentication endpoints
@@ -151,7 +239,8 @@ export const api = createApi({
           storeToken(data.token);
           storeUser(data.user);
         } catch (error) {
-          console.error('Registration failed:', error);
+          // Don't log here, let the component handle the error
+          // console.error('Registration failed:', error);
         }
       },
       invalidatesTags: ['Auth'],
@@ -166,16 +255,6 @@ export const api = createApi({
         method: 'POST',
         body: credentials,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          // Store token and user data on successful login
-          storeToken(data.token);
-          storeUser(data.user);
-        } catch (error) {
-          console.error('Login failed:', error);
-        }
-      },
       invalidatesTags: ['Auth'],
     }),
 

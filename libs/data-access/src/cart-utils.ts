@@ -19,7 +19,8 @@ export const addToCart = (
   variantId?: string
 ): CartItem[] => {
   const existingItem = cart.find(
-    item => item.productId === product.id.toString() && item.variantId === variantId
+    item =>
+      item.productId === product.id.toString() && item.variantId === variantId
   );
 
   if (existingItem) {
@@ -97,7 +98,13 @@ export const loadCartFromStorage = (): CartItem[] => {
 
 export const clearCartFromStorage = (): void => {
   try {
+    console.log(
+      '🛒 clearCartFromStorage: Attempting to remove cart from localStorage'
+    );
     localStorage.removeItem('cart');
+    console.log(
+      '🛒 clearCartFromStorage: Successfully removed cart from localStorage'
+    );
   } catch (error) {
     console.error('Failed to clear cart from localStorage:', error);
   }

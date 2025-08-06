@@ -7,7 +7,7 @@ import {
   useGetProductsByCategoryQuery,
   useGetCategoriesFromApiQuery,
 } from '@data-access/api';
-import { ProductsList } from '../../../components/ProductsList';
+import { ProductsList } from '../../../components/features/products/ProductsList';
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;

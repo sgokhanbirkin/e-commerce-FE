@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Providers } from './providers';
-import { CartDrawerProvider } from '../components/CartDrawerContext';
-import { CartDrawer } from '../components/CartDrawer';
-import { Navbar } from '../components/Navbar';
-import { GuestTokenClientProvider } from '../components/GuestTokenClientProvider';
-import RouteChangeLoader from '../components/RouteChangeLoader';
+import { CartDrawerProvider } from '../components/features/cart/CartDrawerContext';
+import { CartDrawer } from '../components/features/cart/CartDrawer';
+import { Navbar } from '../components/layout/Navbar';
+import { GuestTokenClientProvider } from '../components/shared/GuestTokenClientProvider';
+
 import { App } from 'antd';
+import { Suspense } from 'react';
 import './globals.css';
 
 const geistSans = Geist({
@@ -38,8 +39,9 @@ export default function RootLayout({
           <App>
             <CartDrawerProvider>
               <GuestTokenClientProvider>
-                <RouteChangeLoader />
-                <Navbar />
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Navbar />
+                </Suspense>
                 {children}
                 <CartDrawer />
               </GuestTokenClientProvider>

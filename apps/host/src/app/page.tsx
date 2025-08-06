@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { Layout, Typography, Card, Space, Row, Col } from 'antd';
-import { ProductsList } from '../components/ProductsList';
-import { Basket } from '../components/Basket';
+import { ProductsList } from '../components/features/products/ProductsList';
+import { Basket } from '../components/features/cart/Basket';
 import { useGetProductsQuery } from '@data-access/api';
 import { useGetCartItemsQuery } from '@data-access/api';
 
@@ -30,9 +30,7 @@ export default function Home() {
                 <Title level={3} style={{ marginBottom: '8px' }}>
                   Ürünlerimiz
                 </Title>
-                <Text type='secondary'>
-                  En kaliteli ürünleri keşfedin
-                </Text>
+                <Text type='secondary'>En kaliteli ürünleri keşfedin</Text>
                 {error && (
                   <div style={{ marginTop: '16px' }}>
                     <Text type='danger'>
@@ -56,9 +54,7 @@ export default function Home() {
                 <Title level={3} style={{ marginBottom: '8px' }}>
                   Sepetim
                 </Title>
-                <Text type='secondary'>
-                  Alışveriş sepetiniz
-                </Text>
+                <Text type='secondary'>Alışveriş sepetiniz</Text>
                 {cartError && (
                   <div style={{ marginTop: '16px' }}>
                     <Text type='danger'>

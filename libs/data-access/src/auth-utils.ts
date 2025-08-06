@@ -22,7 +22,15 @@ export const storeToken = (token: string, expiresIn?: number): void => {
     expiresAt: expiresIn ? Date.now() + expiresIn * 1000 : undefined,
   };
 
+  // console.log('🔐 storeToken Debug:', {
+  //   token: token ? 'exists' : 'null',
+  //   tokenLength: token?.length,
+  //   expiresIn,
+  //   expiresAt: tokenData.expiresAt,
+  // });
+
   localStorage.setItem('jwt_token', JSON.stringify(tokenData));
+  // console.log('🔐 Token stored in localStorage');
 };
 
 /**
@@ -33,6 +41,11 @@ export const getToken = (): string | null => {
 
   try {
     const tokenData = localStorage.getItem('jwt_token');
+    // console.log('🔐 getToken Debug:', {
+    //   tokenData: tokenData ? 'exists' : 'null',
+    //   tokenDataLength: tokenData?.length,
+    // });
+
     if (
       !tokenData ||
       tokenData === 'undefined' ||
@@ -45,9 +58,15 @@ export const getToken = (): string | null => {
 
     // Check if token is expired
     if (parsed.expiresAt && Date.now() > parsed.expiresAt) {
+      // console.log('🔐 Token expired, removing...');
       removeToken();
       return null;
     }
+
+    // console.log('🔐 Token retrieved successfully:', {
+    //   tokenExists: !!parsed.token,
+    //   tokenLength: parsed.token?.length,
+    // });
 
     return parsed.token;
   } catch (error) {
@@ -187,7 +206,7 @@ export function clearGuestToken() {
 
 export async function fetchOrCreateGuestToken(): Promise<string> {
   if (typeof window === 'undefined') return '';
-  let token = getGuestToken();
+  let token = getGuestToken() || '';
   console.log('🔍 Current guest token:', token);
   if (!token) {
     console.log('🔄 Fetching new guest token...');
@@ -201,9 +220,10 @@ export async function fetchOrCreateGuestToken(): Promise<string> {
     console.log('📡 Guest token response status:', res.status);
     const data = await res.json();
     console.log('📦 Guest token response data:', data);
-    token = data.token;
-    setGuestToken(data.token, data.guestId);
+    token = data.token || '';
+    const guestId = data.guestId || `guest_${Date.now()}`;
+    setGuestToken(token, guestId);
     console.log('✅ New guest token set:', token);
   }
-  return token;
+  return token || '';
 }

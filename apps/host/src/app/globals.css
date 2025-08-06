@@ -110,3 +110,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* React 19 uyumluluğu için Antd override */
+.ant-wave {
+  display: none !important;
+}
+
+.ant-btn:active {
+  transform: none !important;
+}
+
+/* React 19 uyumluluğu için ek ayarlar */
+.ant-config-provider {
+  isolation: isolate;
+}

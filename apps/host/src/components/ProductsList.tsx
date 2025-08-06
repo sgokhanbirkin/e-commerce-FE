@@ -44,7 +44,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       <div style={{ textAlign: 'center', padding: '40px' }}>
         <Spin size='large' />
         <div style={{ marginTop: '16px' }}>
-          <Text type='secondary'>Loading products...</Text>
+          <Text type='secondary'>Ürünler yükleniyor...</Text>
         </div>
       </div>
     );

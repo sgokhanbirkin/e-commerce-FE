@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Menu, Layout, Spin, Badge } from 'antd';
+import { Menu, Layout, Spin, Badge, Space } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -10,6 +10,7 @@ import {
   useGetCartItemsQuery,
 } from '@data-access/api';
 import { useCartDrawer } from './CartDrawerContext';
+import UserMenu from './UserMenu';
 
 const { Header } = Layout;
 
@@ -48,27 +49,27 @@ export const Navbar: React.FC = () => {
             items={
               categories && categories.length > 0
                 ? categories.map(cat => ({
-                    key: cat.id,
-                    label: (
-                      <Link href={`/categories/${cat.id}`}>{cat.name}</Link>
-                    ),
-                  }))
+                  key: cat.id,
+                  label: (
+                    <Link href={`/categories/${cat.id}`}>{cat.name}</Link>
+                  ),
+                }))
                 : [
-                    {
-                      key: 'no-categories',
-                      label: (
-                        <span style={{ color: '#999' }}>
-                          No categories available
-                        </span>
-                      ),
-                    },
-                  ]
+                  {
+                    key: 'no-categories',
+                    label: (
+                      <span style={{ color: '#999' }}>
+                        No categories available
+                      </span>
+                    ),
+                  },
+                ]
             }
           />
         )}
       </div>
 
-      <div>
+      <Space style={{ marginLeft: 'auto' }}>
         <Badge count={cartCount} size='small'>
           <button
             onClick={openCart}
@@ -84,7 +85,8 @@ export const Navbar: React.FC = () => {
             <ShoppingCartOutlined style={{ fontSize: '20px' }} />
           </button>
         </Badge>
-      </div>
+        <UserMenu />
+      </Space>
     </Header>
   );
 };

@@ -247,6 +247,23 @@ export const api = createApi({
       invalidatesTags: ['Address'],
     }),
 
+    updateAddress: build.mutation<Address, Address>({
+      query: addressData => ({
+        url: `users/me/addresses/${addressData.id}`,
+        method: 'PUT',
+        body: addressData,
+      }),
+      invalidatesTags: ['Address'],
+    }),
+
+    deleteAddress: build.mutation<void, number>({
+      query: addressId => ({
+        url: `users/me/addresses/${addressId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Address'],
+    }),
+
     // Reviews endpoints
     getReviews: build.query<Review[], string>({
       query: (productId: string) => `products/${productId}/reviews`,
@@ -303,6 +320,8 @@ export const {
   // Addresses hooks
   useGetAddressesQuery,
   useAddAddressMutation,
+  useUpdateAddressMutation,
+  useDeleteAddressMutation,
 
   // Reviews hooks
   useGetReviewsQuery,

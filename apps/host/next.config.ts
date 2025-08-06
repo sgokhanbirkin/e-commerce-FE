@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  transpilePackages: ['antd', '@ant-design/icons'],
 };
 
 export default nextConfig;

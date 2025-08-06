@@ -72,6 +72,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Initialize auth state on mount
   useEffect(() => {
     const initializeAuth = () => {
+      console.log('🔐 Starting AuthContext initialization...');
+
       const storedToken = getToken();
       const storedUser = getUser();
 
@@ -81,9 +83,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         tokenLength: storedToken?.length,
       });
 
-      if (storedToken && storedUser) {
+      if (storedToken) {
+        console.log(
+          '🔐 Setting token from localStorage:',
+          `${storedToken.substring(0, 20)}...`
+        );
         setToken(storedToken);
-        setUser(storedUser);
+
+        if (storedUser) {
+          console.log('🔐 Setting user from localStorage');
+          setUser(storedUser);
+        }
+      } else {
+        console.log('🔐 No token found in localStorage');
       }
 
       // Hızlı başlatma - loading'i hemen kapat

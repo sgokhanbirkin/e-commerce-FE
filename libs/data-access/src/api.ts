@@ -369,12 +369,16 @@ export const api = createApi({
 
     addReview: build.mutation<
       Review,
-      { productId: string; rating: number; comment: string }
+      { productId: string; rating: number; title: string; comment: string }
     >({
-      query: ({ productId, ...reviewData }) => ({
+      query: ({ productId, rating, title, comment }) => ({
         url: `products/${productId}/reviews`,
         method: 'POST',
-        body: reviewData,
+        body: {
+          rating,
+          title,
+          comment,
+        },
       }),
       invalidatesTags: (result, error, { productId }) => [
         { type: 'Review', id: productId },

@@ -84,6 +84,7 @@ export interface Review extends BaseEntity {
   productId: string;
   userId: string;
   rating: number;
+  title: string;
   comment: string;
   user?: {
     name: string;

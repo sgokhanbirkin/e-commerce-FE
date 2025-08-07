@@ -104,6 +104,18 @@ export function ProductReviews({
           <Rate />
         </Form.Item>
         <Form.Item
+          name='title'
+          label='Title'
+          rules={[
+            {
+              required: true,
+              message: 'Please enter a title for your review.',
+            },
+          ]}
+        >
+          <Input placeholder='Review title' style={{ fontSize: 16 }} />
+        </Form.Item>
+        <Form.Item
           name='comment'
           label='Comment'
           rules={[{ required: true, message: 'Please write your review.' }]}

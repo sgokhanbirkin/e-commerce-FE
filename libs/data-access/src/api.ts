@@ -15,6 +15,7 @@ import {
   storeUser,
   clearAuth,
   getGuestToken,
+  clearGuestToken,
 } from './auth-utils';
 
 // Base API configuration
@@ -29,12 +30,12 @@ export const api = createApi({
       const guestToken = getGuestToken();
       const token = userToken || guestToken;
 
-      // console.log('🔑 Token Debug:', {
-      //   userToken: userToken ? 'exists' : 'null',
-      //   guestToken: guestToken ? 'exists' : 'null',
-      //   finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
-      //   tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
-      // });
+      console.log('🔑 Token Debug:', {
+        userToken: userToken ? 'exists' : 'null',
+        guestToken: guestToken ? 'exists' : 'null',
+        finalToken: token ? `${token.substring(0, 10)}...` : 'NO TOKEN',
+        tokenType: userToken ? 'USER' : guestToken ? 'GUEST' : 'NONE',
+      });
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -255,6 +256,21 @@ export const api = createApi({
         method: 'POST',
         body: credentials,
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          // Store token and user data on successful login
+          storeToken(data.token);
+          storeUser(data.user);
+          // Clear guest token when user logs in
+          clearGuestToken();
+          console.log(
+            '🔐 Login successful, user token stored, guest token cleared'
+          );
+        } catch (error) {
+          console.error('Login failed:', error);
+        }
+      },
       invalidatesTags: ['Auth'],
     }),
 

@@ -83,6 +83,7 @@ cp apps/basket/env.example apps/basket/.env.local
 ### 4. Environment Değişkenlerini Düzenleyin
 
 **apps/host/.env.local**
+
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:8080/api
 NEXT_PUBLIC_HOST_URL=http://localhost:3000
@@ -91,12 +92,14 @@ NEXT_PUBLIC_BASKET_URL=http://localhost:3002
 ```
 
 **apps/products/.env.local**
+
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:8080/api
 NEXT_PUBLIC_PRODUCTS_URL=http://localhost:3001
 ```
 
 **apps/basket/.env.local**
+
 ```bash
 VITE_API_URL=http://localhost:8080/api
 VITE_BASKET_URL=http://localhost:3002
@@ -124,22 +127,26 @@ Bu frontend projesi, [E-commerce Backend API](https://github.com/sgokhanbirkin/e
 ### Backend Kurulumu
 
 1. **Backend Repository'sini Klonlayın**
+
 ```bash
 git clone https://github.com/sgokhanbirkin/e-commerce-app-BE.git
 cd e-commerce-app-BE
 ```
 
 2. **Backend Bağımlılıklarını Yükleyin**
+
 ```bash
 pnpm install
 ```
 
 3. **Environment Dosyasını Oluşturun**
+
 ```bash
 cp .env.example .env
 ```
 
 4. **Veritabanını Hazırlayın**
+
 ```bash
 pnpm prisma generate
 pnpm prisma db push
@@ -147,6 +154,7 @@ pnpm seed
 ```
 
 5. **Backend Sunucusunu Başlatın**
+
 ```bash
 pnpm dev
 ```
@@ -156,6 +164,7 @@ Backend API: http://localhost:8080
 ### API Dokümantasyonu
 
 Backend API dokümantasyonuna erişmek için:
+
 ```
 http://localhost:8080/api-docs
 ```
@@ -181,16 +190,19 @@ kayra-export-e-commerce/
 ### Uygulama Detayları
 
 #### 🏠 Host Uygulaması (`apps/host/`)
+
 - **Port**: 3000
 - **Amaç**: Ana e-ticaret platformu
 - **Özellikler**: Routing, Module Federation, Authentication
 
 #### 🛍️ Products Uygulaması (`apps/products/`)
+
 - **Port**: 3001
 - **Amaç**: Ürün yönetimi ve görüntüleme
 - **Özellikler**: Ürün listesi, filtreleme, arama
 
 #### 🛒 Basket Uygulaması (`apps/basket/`)
+
 - **Port**: 3002
 - **Amaç**: Sepet işlemleri
 - **Özellikler**: Sepet yönetimi, fiyat hesaplama
@@ -242,12 +254,14 @@ docker-compose up host products basket
 ## 🎨 Özellikler
 
 ### 🔐 Kimlik Doğrulama
+
 - **JWT Token**: User ve guest token sistemi
 - **Login/Register**: Kullanıcı kayıt ve giriş
 - **Protected Routes**: Güvenli sayfa erişimi
 - **Token Refresh**: Otomatik token yenileme
 
 ### 🛍️ E-ticaret Özellikleri
+
 - **Ürün Listesi**: Kategorilere göre ürün görüntüleme
 - **Ürün Detayı**: Detaylı ürün bilgileri
 - **Sepet Yönetimi**: Ürün ekleme, çıkarma, miktar güncelleme
@@ -256,12 +270,14 @@ docker-compose up host products basket
 - **Review Sistemi**: Ürün değerlendirmeleri
 
 ### 🎯 Mikro Frontend Özellikleri
+
 - **Module Federation**: Dinamik bileşen yükleme
 - **Independent Development**: Bağımsız geliştirme
 - **Technology Diversity**: Farklı teknolojiler
 - **Lazy Loading**: Performans optimizasyonu
 
 ### 📱 Responsive Tasarım
+
 - **Mobile First**: Mobil uyumlu tasarım
 - **Ant Design**: Modern UI bileşenleri
 - **Breakpoint System**: Responsive grid sistemi
@@ -287,14 +303,14 @@ await loginUser({ email: 'user@example.com', password: 'password' });
 
 ### API Endpoint'leri
 
-| Endpoint | Method | Açıklama |
-|----------|--------|----------|
-| `/api/products` | GET | Ürün listesi |
-| `/api/products/{id}` | GET | Ürün detayı |
-| `/api/cart` | GET/POST | Sepet işlemleri |
-| `/api/auth/login` | POST | Kullanıcı girişi |
-| `/api/auth/register` | POST | Kullanıcı kaydı |
-| `/api/orders` | POST | Sipariş oluşturma |
+| Endpoint             | Method   | Açıklama          |
+| -------------------- | -------- | ----------------- |
+| `/api/products`      | GET      | Ürün listesi      |
+| `/api/products/{id}` | GET      | Ürün detayı       |
+| `/api/cart`          | GET/POST | Sepet işlemleri   |
+| `/api/auth/login`    | POST     | Kullanıcı girişi  |
+| `/api/auth/register` | POST     | Kullanıcı kaydı   |
+| `/api/orders`        | POST     | Sipariş oluşturma |
 
 ### Token Yönetimi
 
@@ -336,6 +352,7 @@ docker run -p 3000:3000 -p 3001:3001 -p 3002:3002 kayra-ecommerce
 ### Environment Variables
 
 **Production için gerekli değişkenler:**
+
 ```bash
 NEXT_PUBLIC_API_URL=https://api.yourdomain.com
 NEXT_PUBLIC_HOST_URL=https://yourdomain.com
@@ -373,11 +390,13 @@ pnpm test:e2e
 ### Proje Dokümantasyonu
 
 Detaylı proje dokümantasyonu için:
+
 - [PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md)
 
 ### API Dokümantasyonu
 
 Backend API dokümantasyonu:
+
 - [Backend Repository](https://github.com/sgokhanbirkin/e-commerce-app-BE)
 - [API Docs](http://localhost:8080/api-docs)
 
